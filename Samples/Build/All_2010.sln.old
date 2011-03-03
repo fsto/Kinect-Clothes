@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{19091980-2008-4CFA-1491-04CC20D8BCF9}") = "NiAudioSample", "..\NiAudioSample\NiAudioSample_2010.vcproj", "{9090EACB-98B0-44D8-866C-6F5A55AA1BC0}"
+EndProject
+Project("{19091980-2008-4CFA-1491-04CC20D8BCF9}") = "NiBackRecorder", "..\NiBackRecorder\NiBackRecorder_2010.vcproj", "{67B7CE6E-218A-4622-A6D1-B5DFD1A4F552}"
+EndProject
+Project("{19091980-2008-4CFA-1491-04CC20D8BCF9}") = "NiConvertXToONI", "..\NiConvertXToONI\NiConvertXToONI_2010.vcproj", "{DBB1C4EB-9843-44D4-8BFA-C3DA5ED84E9F}"
+EndProject
+Project("{19091980-2008-4CFA-1491-04CC20D8BCF9}") = "NiCRead", "..\NiCRead\NiCRead_2010.vcproj", "{F1D8A36D-3A6D-4F5B-851B-13662D1C8A1A}"
+EndProject
+Project("{19091980-2008-4CFA-1491-04CC20D8BCF9}") = "NiRecordSynthetic", "..\NiRecordSynthetic\NiRecordSynthetic_2010.vcproj", "{791B09EA-5CF3-4D39-9213-909CC3B7FF92}"
+EndProject
+Project("{19091980-2008-4CFA-1491-04CC20D8BCF9}") = "NiSampleModule", "..\NiSampleModule\NiSampleModule_2010.vcproj", "{E24EE270-DB07-4290-958D-AAC4EC8702FE}"
+EndProject
+Project("{19091980-2008-4CFA-1491-04CC20D8BCF9}") = "NiSimpleCreate", "..\NiSimpleCreate\NiSimpleCreate_2010.vcproj", "{D18E6544-A329-4044-949A-0B4111731BCC}"
+EndProject
+Project("{19091980-2008-4CFA-1491-04CC20D8BCF9}") = "NiSimpleRead", "..\NiSimpleRead\NiSimpleRead_2010.vcproj", "{8E1A6EA7-3E08-4F6D-A915-648139270231}"
+EndProject
+Project("{19091980-2008-4CFA-1491-04CC20D8BCF9}") = "NiSimpleViewer", "..\NiSimpleViewer\NiSimpleViewer_2010.vcproj", "{D199709A-523E-4A12-B928-8DF654879839}"
+EndProject
+Project("{19091980-2008-4CFA-1491-04CC20D8BCF9}") = "NiUserTracker", "..\NiUserTracker\NiUserTracker_2010.vcproj", "{D199709A-523E-4A12-B928-8DF65487980F}"
+EndProject
+Project("{19091980-2008-4CFA-1491-04CC20D8BCF9}") = "NiViewer", "..\NiViewer\NiViewer_2010.vcproj", "{98122DD2-BFE1-4CA8-0147-E4168A7368C8}"
+EndProject
+Project("{19091980-2008-4CFA-1491-04CC20D8BCF9}") = "SimpleRead.net", "..\SimpleRead.net\SimpleRead.net_2010.csproj", "{C60A3B6A-3270-4FA9-9F80-D6553780D049}"
+EndProject
+Project("{19091980-2008-4CFA-1491-04CC20D8BCF9}") = "SimpleViewer.net", "..\SimpleViewer.net\SimpleViewer.net_2010.csproj", "{29CC3A9A-5CB1-4D53-B221-45181C4B281B}"
+EndProject
+Project("{19091980-2008-4CFA-1491-04CC20D8BCF9}") = "UserTracker.net", "..\UserTracker.net\UserTracker.net_2010.csproj", "{29CC3A9A-5CB1-4D53-B221-45181C4B281C}"
+EndProject

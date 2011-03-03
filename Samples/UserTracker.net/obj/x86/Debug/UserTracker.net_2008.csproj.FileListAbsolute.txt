@@ -1,0 +1,5 @@
+D:\Projects\SDK\OpenNI\Platform\Win32\Redist\Samples\Bin\Debug\UserTracker.net.exe
+D:\Projects\SDK\OpenNI\Platform\Win32\Redist\Samples\Bin\Debug\UserTracker.net.pdb
+D:\Projects\SDK\OpenNI\Platform\Win32\Redist\Samples\UserTracker.net\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Projects\SDK\OpenNI\Platform\Win32\Redist\Samples\UserTracker.net\obj\x86\Debug\UserTracker.net.exe
+D:\Projects\SDK\OpenNI\Platform\Win32\Redist\Samples\UserTracker.net\obj\x86\Debug\UserTracker.net.pdb
