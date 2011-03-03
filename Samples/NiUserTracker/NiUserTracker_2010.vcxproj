@@ -107,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Res\mainicon.ico" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\Res\OpenNI.rc" />

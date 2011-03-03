@@ -1,0 +1,26 @@
+﻿Build started 3/3/2011 3:16:18 PM.
+Project "\\vmware-host\Shared Folders\tmp\kinect-clothes\Samples\NiSampleModule\NiSampleModule_2010.vcxproj" on node 2 (build target(s)).
+InitializeBuildStatus:
+  Touching "Debug\NiSampleModule.unsuccessfulbuild".
+ClCompile:
+  All outputs are up-to-date.
+ResourceCompile:
+  C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /I..\..\Include /nologo /fo"Debug\OpenNI.res" ..\Res\OpenNI.rc 
+ManifestResourceCompile:
+  C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\NiSampleModule.dll.embed.manifest.res" Debug\NiSampleModule_manifest.rc 
+Link:
+  C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../Bin/Debug\NiSampleModule.dll" /INCREMENTAL /NOLOGO /LIBPATH:../../Lib/Debug /LIBPATH:../../Lib/ openNI.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\NiSampleModule.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"../Bin/Debug/NiSampleModule.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"../../Lib/Debug;../../Lib/\NiSampleModule.lib" /MACHINE:X86 /DLL Debug\OpenNI.res
+  Debug\NiSampleModule.dll.embed.manifest.res
+  Debug\ExportedSampleDepth.obj
+  Debug\Registration.obj
+  Debug\SampleDepth.obj
+Manifest:
+  C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\NiSampleModule.dll.embed.manifest" /manifest Debug\NiSampleModule.dll.intermediate.manifest
+  
+mt.exe : general error c101008a: Failed to save the updated manifest to the file "Debug\NiSampleModule.dll.embed.manifest". The parameter is incorrect.
+  
+Done Building Project "\\vmware-host\Shared Folders\tmp\kinect-clothes\Samples\NiSampleModule\NiSampleModule_2010.vcxproj" (build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:02.40

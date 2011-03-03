@@ -1,0 +1,6 @@
+\\vmware-host\Shared Folders\tmp\kinect-clothes\Samples\Bin\Debug\SimpleRead.net.exe.config
+\\vmware-host\Shared Folders\tmp\kinect-clothes\Samples\Bin\Debug\SimpleRead.net.exe
+\\vmware-host\Shared Folders\tmp\kinect-clothes\Samples\Bin\Debug\SimpleRead.net.pdb
+\\vmware-host\Shared Folders\tmp\kinect-clothes\Samples\SimpleRead.net\obj\x86\Debug\ResolveAssemblyReference.cache
+\\vmware-host\Shared Folders\tmp\kinect-clothes\Samples\SimpleRead.net\obj\x86\Debug\SimpleRead.net.exe
+\\vmware-host\Shared Folders\tmp\kinect-clothes\Samples\SimpleRead.net\obj\x86\Debug\SimpleRead.net.pdb

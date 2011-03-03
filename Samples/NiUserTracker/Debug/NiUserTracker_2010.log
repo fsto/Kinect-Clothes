@@ -1,35 +1,38 @@
-﻿Build started 3/3/2011 12:44:18 AM.
-     1>Project "C:\Users\Fredrik\Documents\Visual Studio 2010\Projects\Clothes\Samples\NiUserTracker\NiUserTracker_2010.vcxproj" on node 2 (build target(s)).
-     1>InitializeBuildStatus:
-         Creating "Debug\NiUserTracker.unsuccessfulbuild" because "AlwaysCreate" was specified.
-       ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../../Include /I../../Samples/NiUserTracker /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp SceneDrawer.cpp
-         SceneDrawer.cpp
-         main.cpp
-         Generating Code...
-       ResourceCompile:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /I..\..\Include /nologo /fo"Debug\OpenNI.res" ..\Res\OpenNI.rc 
-       ManifestResourceCompile:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\NiUserTracker.exe.embed.manifest.res" Debug\NiUserTracker_manifest.rc 
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../Bin/Debug\NiUserTracker.exe" /INCREMENTAL /NOLOGO /LIBPATH:../../Lib/Debug /LIBPATH:../../Lib/ /LIBPATH:../../Samples/NiUserTracker/Libs openNI.lib glut32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\NiUserTracker.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"../Bin/Debug/NiUserTracker.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"../Bin/Debug\NiUserTracker.lib" /MACHINE:X86 Debug\OpenNI.res
-         Debug\NiUserTracker.exe.embed.manifest.res
-         Debug\main.obj
-         Debug\SceneDrawer.obj
-       Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\NiUserTracker.exe.embed.manifest" /manifest Debug\NiUserTracker.exe.intermediate.manifest
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\NiUserTracker.exe.embed.manifest.res" Debug\NiUserTracker_manifest.rc 
-       LinkEmbedManifest:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../Bin/Debug\NiUserTracker.exe" /INCREMENTAL /NOLOGO /LIBPATH:../../Lib/Debug /LIBPATH:../../Lib/ /LIBPATH:../../Samples/NiUserTracker/Libs openNI.lib glut32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\NiUserTracker.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"../Bin/Debug/NiUserTracker.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"../Bin/Debug\NiUserTracker.lib" /MACHINE:X86 Debug\OpenNI.res
-         Debug\NiUserTracker.exe.embed.manifest.res
-         Debug\main.obj
-         Debug\SceneDrawer.obj
-         NiUserTracker_2010.vcxproj -> C:\Users\Fredrik\Documents\Visual Studio 2010\Projects\Clothes\Samples\NiUserTracker\../Bin/Debug\NiUserTracker.exe
-       FinalizeBuildStatus:
-         Deleting file "Debug\NiUserTracker.unsuccessfulbuild".
-         Touching "Debug\NiUserTracker.lastbuildstate".
-     1>Done Building Project "C:\Users\Fredrik\Documents\Visual Studio 2010\Projects\Clothes\Samples\NiUserTracker\NiUserTracker_2010.vcxproj" (build target(s)).
+﻿Build started 3/3/2011 3:38:48 PM.
+Project "C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\kinect-clothes\Samples\NiUserTracker\NiUserTracker_2010.vcxproj" on node 2 (rebuild target(s)).
+_PrepareForClean:
+  Deleting file "Debug\NiUserTracker.lastbuildstate".
+InitializeBuildStatus:
+  Creating "Debug\NiUserTracker.unsuccessfulbuild" because "AlwaysCreate" was specified.
+ClCompile:
+  C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../../Include /I../../Samples/NiUserTracker /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp SceneDrawer.cpp
+  SceneDrawer.cpp
+  main.cpp
+  Generating Code...
+ResourceCompile:
+  C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /I..\..\Include /nologo /fo"Debug\OpenNI.res" ..\Res\OpenNI.rc 
+ManifestResourceCompile:
+  C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\NiUserTracker.exe.embed.manifest.res" Debug\NiUserTracker_manifest.rc 
+Link:
+  C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../Bin/Debug\NiUserTracker.exe" /INCREMENTAL /NOLOGO /LIBPATH:../../Lib/Debug /LIBPATH:../../Lib/ /LIBPATH:../../Samples/NiUserTracker/Libs openNI.lib glut32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\NiUserTracker.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"../Bin/Debug/NiUserTracker.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"../Bin/Debug\NiUserTracker.lib" /MACHINE:X86 Debug\OpenNI.res
+  Debug\NiUserTracker.exe.embed.manifest.res
+  Debug\main.obj
+  Debug\SceneDrawer.obj
+Manifest:
+  Deleting file "Debug\NiUserTracker.exe.embed.manifest".
+  C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\NiUserTracker.exe.embed.manifest" /manifest Debug\NiUserTracker.exe.intermediate.manifest
+  C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\NiUserTracker.exe.embed.manifest.res" Debug\NiUserTracker_manifest.rc 
+LinkEmbedManifest:
+  C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../Bin/Debug\NiUserTracker.exe" /INCREMENTAL /NOLOGO /LIBPATH:../../Lib/Debug /LIBPATH:../../Lib/ /LIBPATH:../../Samples/NiUserTracker/Libs openNI.lib glut32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\NiUserTracker.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"../Bin/Debug/NiUserTracker.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"../Bin/Debug\NiUserTracker.lib" /MACHINE:X86 Debug\OpenNI.res
+  Debug\NiUserTracker.exe.embed.manifest.res
+  Debug\main.obj
+  Debug\SceneDrawer.obj
+  NiUserTracker_2010.vcxproj -> C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\kinect-clothes\Samples\NiUserTracker\../Bin/Debug\NiUserTracker.exe
+FinalizeBuildStatus:
+  Deleting file "Debug\NiUserTracker.unsuccessfulbuild".
+  Touching "Debug\NiUserTracker.lastbuildstate".
+Done Building Project "C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\kinect-clothes\Samples\NiUserTracker\NiUserTracker_2010.vcxproj" (rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:03.68
+Time Elapsed 00:00:04.73

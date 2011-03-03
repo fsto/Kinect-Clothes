@@ -1,2 +1,8 @@
 C:\Program Files (x86)\OpenNI\Samples\UserTracker.net\obj\x86\Debug\UserTracker.net.exe
 C:\Program Files (x86)\OpenNI\Samples\UserTracker.net\obj\x86\Debug\UserTracker.net.pdb
+\\vmware-host\Shared Folders\tmp\kinect-clothes\Samples\Bin\Debug\UserTracker.net.exe.config
+\\vmware-host\Shared Folders\tmp\kinect-clothes\Samples\Bin\Debug\UserTracker.net.exe
+\\vmware-host\Shared Folders\tmp\kinect-clothes\Samples\Bin\Debug\UserTracker.net.pdb
+\\vmware-host\Shared Folders\tmp\kinect-clothes\Samples\UserTracker.net\obj\x86\Debug\ResolveAssemblyReference.cache
+\\vmware-host\Shared Folders\tmp\kinect-clothes\Samples\UserTracker.net\obj\x86\Debug\UserTracker.net.exe
+\\vmware-host\Shared Folders\tmp\kinect-clothes\Samples\UserTracker.net\obj\x86\Debug\UserTracker.net.pdb

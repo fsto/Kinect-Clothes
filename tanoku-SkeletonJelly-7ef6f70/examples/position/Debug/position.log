@@ -1,0 +1,26 @@
+﻿Build started 3/3/2011 6:08:10 PM.
+Project "C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\tanoku-SkeletonJelly-7ef6f70\examples\position\position.vcxproj" on node 2 (rebuild target(s)).
+_PrepareForClean:
+  Deleting file "Debug\position.lastbuildstate".
+InitializeBuildStatus:
+  Touching "Debug\position.unsuccessfulbuild".
+ClCompile:
+  C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\tanoku-SkeletonJelly-7ef6f70\examples\position\GL" /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\src\skeletonjelly.cpp main.cpp
+  main.cpp
+  skeletonjelly.cpp
+c:\documents and settings\administrator.fsto-fe1d070f89\my documents\visual studio 2010\projects\tanoku-skeletonjelly-7ef6f70\src\skeletonjelly.cpp(484): warning C4101: 'frontPlane' : unreferenced local variable
+  Generating Code...
+Link:
+  C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\tanoku-SkeletonJelly-7ef6f70\Debug\position.exe" /NOLOGO /LIBPATH:Lib openni.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\position.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\tanoku-SkeletonJelly-7ef6f70\Debug\position.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\tanoku-SkeletonJelly-7ef6f70\Debug\position.lib" /MACHINE:X86 Debug\skeletonjelly.obj
+  Debug\main.obj
+  position.vcxproj -> C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\tanoku-SkeletonJelly-7ef6f70\Debug\position.exe
+Manifest:
+  C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\tanoku-SkeletonJelly-7ef6f70\Debug\position.exe;#1" /manifest Debug\position.exe.intermediate.manifest
+FinalizeBuildStatus:
+  Deleting file "Debug\position.unsuccessfulbuild".
+  Touching "Debug\position.lastbuildstate".
+Done Building Project "C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\tanoku-SkeletonJelly-7ef6f70\examples\position\position.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:04.05
