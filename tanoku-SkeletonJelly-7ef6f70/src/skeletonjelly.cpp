@@ -417,86 +417,44 @@ void Kinect::renderDepth(unsigned char *buffer, bool background, int pitch)
 	}
 }
 
-void Kinect::processHand(KinectUser::Hand *hand, XnSkeletonJointPosition *jointWorld, float backPlane, float planeDepth, float xRes, float yRes)
-{
-	static const int max_history = 30;
-	static const int static_time_steps = 8;
-
-	_depth.ConvertRealWorldToProjective(1, &jointWorld->position, &hand->pos);
-
-	hand->pos.X /= xRes;
-	hand->pos.Y /= yRes;
-	hand->pos.Z = (backPlane - jointWorld->position.Z) / (planeDepth);
-
-	hand->tracked = jointWorld->fConfidence >= 0.5f;
-
-	hand->history.push_back(hand->pos);
-	if (hand->history.size() > max_history)
-		hand->history.pop_front();
-
-	if (hand->history.size() > static_time_steps)
-	{
-		std::list<XnPoint3D>::reverse_iterator it;
-		float sumX = 0.0f, sumY = 0.0f, avgX, avgY, varX, varY;
-		int i;
-
-		for (it = hand->history.rbegin(), i = 0;
-			i < static_time_steps; ++it, ++i)
-		{
-			sumX += (*it).X;
-			sumY += (*it).Y;
-		}
-
-		avgX = sumX / static_time_steps;
-		avgY = sumY / static_time_steps;
-		sumX = 0.0f;
-		sumY = 0.0f;
-
-		for (it = hand->history.rbegin(), i = 0;
-			i < static_time_steps; ++it, ++i)
-		{
-			sumX += (avgX - (*it).X) * (avgX - (*it).X);
-			sumY += (avgY - (*it).Y) * (avgY - (*it).Y);
-		}
-
-		varX = sumX / (static_time_steps - 1.0f);
-		varY = sumY / (static_time_steps - 1.0f);
-
-		hand->variance = (varX + varY) * 1000.0f;
-	}
-}
-
 void Kinect::updateUserData(XnUserID id, KinectUser *data)
 {
 	static XnSkeletonJoint jointTranslation[] =
 	{
-		XN_SKEL_HEAD, /* JOINT_HEAD, */
-		XN_SKEL_LEFT_HAND,  /* JOINT_HAND_LEFT, */
-		XN_SKEL_RIGHT_HAND, /* JOINT_HAND_RIGHT */
-		XN_SKEL_LEFT_ELBOW, /* JOINT_ELBOW_LEFT, */
-		XN_SKEL_RIGHT_ELBOW, /* JOINT_ELBOW_RIGHT, */
-		XN_SKEL_LEFT_SHOULDER, /* JOINT_SHOULDER_LEFT, */
-		XN_SKEL_RIGHT_SHOULDER, /* JOINT_SHOULDER_RIGHT, */
+		XN_SKEL_HEAD, 
+        XN_SKEL_NECK, 
+        XN_SKEL_TORSO, 
+        XN_SKEL_WAIST, 
+        XN_SKEL_LEFT_COLLAR, 
+        XN_SKEL_LEFT_SHOULDER, 
+        XN_SKEL_LEFT_ELBOW, 
+        XN_SKEL_LEFT_WRIST, 
+        XN_SKEL_LEFT_HAND, 
+        XN_SKEL_LEFT_FINGERTIP, 
+        XN_SKEL_RIGHT_COLLAR, 
+        XN_SKEL_RIGHT_SHOULDER, 
+        XN_SKEL_RIGHT_ELBOW, 
+        XN_SKEL_RIGHT_WRIST, 
+        XN_SKEL_RIGHT_HAND, 
+        XN_SKEL_RIGHT_FINGERTIP, 
+        XN_SKEL_LEFT_HIP, 
+        XN_SKEL_LEFT_KNEE, 
+        XN_SKEL_LEFT_ANKLE, 
+        XN_SKEL_LEFT_FOOT, 
+        XN_SKEL_RIGHT_HIP, 
+        XN_SKEL_RIGHT_KNEE, 
+        XN_SKEL_RIGHT_ANKLE, 
+        XN_SKEL_RIGHT_FOOT,
 	};
 
 	static const float planeDepth = 500.0f;
 
-	float backPlane, frontPlane;
 	XnUInt32XYPair resolution = getDepthResolution();
 
 	if (data->status & USER_TRACKING)
 	{
 		for (int i = 0; i < KINECT_JOINT_MAX; ++i) 
 			_userGen.GetSkeletonCap().GetSkeletonJointPosition(id, jointTranslation[i], data->joints[i]);
-
-		backPlane = (data->joints[JOINT_SHOULDER_LEFT].position.Z +
-					 data->joints[JOINT_SHOULDER_RIGHT].position.Z) / 2.0f;
-
-		processHand(&data->left, &data->joints[JOINT_HAND_LEFT],
-				backPlane, planeDepth, (float)resolution.X, (float)resolution.Y);
-
-		processHand(&data->right, &data->joints[JOINT_HAND_RIGHT],
-				backPlane, planeDepth, (float)resolution.X, (float)resolution.Y);
 	}
 
 	_userGen.GetCoM(id, data->centerOfMass);

@@ -20,6 +20,10 @@ char g_message[64] = {0};
 char g_coords[64] = {0};
 char g_leftHand[64] = {0};
 char g_rightHand[64] = {0};
+XnUInt32XYPair res;
+
+unsigned char* imageBuffer;
+
 
 const KinectUser *g_userData = NULL;
 
@@ -33,10 +37,21 @@ static const char *MESSAGES[] =
 	"Calibration failed"
 };
 
+void convertToProjCoordinates(XnSkeletonJointPosition &joint)
+{
+	xn::DepthGenerator* depth = g_kinect.Depth();
+	depth->ConvertRealWorldToProjective(1,&joint.position,&joint.position);
+
+	joint.position.X /= res.X;
+	joint.position.Y /= res.Y;
+
+}
+
+
 void kinect_status(Kinect *k, Kinect::CallbackType cb_type, XnUserID id, void *data)
 {
-	printf(g_message, 64, "User [%d]: %s", id, MESSAGES[cb_type]);
-	printf("%s\n", g_message);
+	_snprintf(g_message, 64, "User [%d]: %s", id, MESSAGES[cb_type]);
+	//_snprintf("%s\n", g_message);
 
 	if (cb_type == Kinect::CB_NEW_USER && id == 1)
 	{
@@ -54,10 +69,51 @@ void glPrintString(void *font, char *str)
 	}
 }
 
-/*void drawRealImage()
+void drawRealImage()
 {
-	Kinect::renderImage(ourImageBuffer, 100);
-}*/
+	g_kinect.renderImage(imageBuffer, 0);
+
+	XnUInt32XYPair res;
+
+	res = g_kinect.getDepthResolution();
+
+	glColor3f(1,1,1);
+
+	glBindTexture(GL_TEXTURE_2D, 1);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, res.X, res.Y, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageBuffer);
+
+	glBegin(GL_QUADS);
+		glTexCoord2f(0,1);
+		glVertex2f(-1,-1);
+
+		glTexCoord2f(1,1);
+		glVertex2f(1,-1);
+
+		glTexCoord2f(1,0);
+		glVertex2f(1,1);
+
+		glTexCoord2f(0,0);
+		glVertex2f(-1,1);
+	glEnd();
+
+}
+
+void drawJoint(XnSkeletonJointPosition& joint)
+{
+	convertToProjCoordinates(joint);
+
+	glColor3f(1.0f, 1.0f, 1.0f);
+			
+	glBegin(GL_POINTS);
+	glVertex3f(joint.position.X, joint.position.Y, .1f);
+	glEnd();
+}
 
 void drawTracking()
 {
@@ -78,66 +134,18 @@ void drawTracking()
 			glVertex3f(com->X, com->Y, 0.1f);
 		glEnd();
 
-		printf(g_coords, 64, "CoM: (%0.4f, %0.4f, %0.4f)\n", com->X, com->Y, com->Z);
+		_snprintf(g_coords, 64, "CoM: (%0.4f, %0.4f, %0.4f)\n", com->X, com->Y, com->Z);
 
         if (g_kinect.userStatus() & Kinect::USER_TRACKING)
 		{
-			const KinectUser::Hand *left = &g_userData->left;
-			const KinectUser::Hand *right = &g_userData->right;
-
-			if (left->tracked)
+			XnSkeletonJointPosition joint;
+			for(int i=0;i<g_kinect.KINECT_JOINT_MAX;++i)
 			{
-				printf(g_leftHand, 64, "Left: (%0.4f, %0.4f, %s) %f %s\n",
-						left->pos.X, left->pos.Y, 
-						left->pos.Z >= 0.8f ? "PUSH" : "-",
-						left->variance, 
-						left->variance <= 0.1f ? "IDLE" : "");
-				
-				glColor3f(1.0f, 1.0f, 1.0f);
-				glBegin(GL_POINTS);
-					glVertex3f(left->pos.X, left->pos.Y, 0.1f);
-				glEnd();
-
-				glColor4f(0.81, 0.72, 0.66, 0.33);
-				glLineWidth(4.0f);
-				std::list<XnPoint3D>::const_iterator it;
-
-				glBegin(GL_LINE_STRIP);
-				for (it = left->history.begin(); it != left->history.end(); ++it)
-					glVertex3f((*it).X, (*it).Y, 0.1f);
-				glEnd();
+				joint = g_userData->joints[i];
+				printf("%d: %f,%f\n", i, joint.position.X, joint.position.Y);
+				drawJoint(joint);
 			}
-			else
-			{
-				printf(g_leftHand, 64, "Left: --");
-			}
-			
-			if (right->tracked)
-			{
-				printf(g_rightHand, 64, "Right: (%0.4f, %0.4f, %s) %f %s\n", 
-						right->pos.X, right->pos.Y, 
-						right->pos.Z >= 0.8f ? "PUSH" : "-",
-						right->variance,
-						right->variance <= 0.1f ? "IDLE" : "");
-
-				glColor3f(1.0f, 1.0f, 1.0f);
-				glBegin(GL_POINTS);
-					glVertex3f(right->pos.X, right->pos.Y, 0.1f);
-				glEnd();
-
-				glColor4f(0.81, 0.72, 0.66, 0.33);
-				glLineWidth(4.0f);
-				std::list<XnPoint3D>::const_iterator it;
-
-				glBegin(GL_LINE_STRIP);
-				for (it = right->history.begin(); it != right->history.end(); ++it)
-					glVertex3f((*it).X, (*it).Y, 0.1f);
-				glEnd();
-			}
-			else
-			{
-				printf(g_rightHand, 64, "Right: --");
-			}
+			printf("\n");
 		}
 	}
 }
@@ -179,9 +187,13 @@ void glutDisplay()
 	glPushMatrix();
 	glLoadIdentity();
 
-	glDisable(GL_TEXTURE_2D);
+	glEnable(GL_TEXTURE_2D);
 	glDisable(GL_DEPTH_TEST); 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	drawRealImage();
+
+	glDisable(GL_TEXTURE_2D);
 
 	drawTracking();
 	drawHUD();
@@ -212,7 +224,7 @@ void glutKeyboard (unsigned char key, int x, int y)
 void glInit (int *pargc, char **argv)
 {
 	glutInit(pargc, argv);
-	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInitWindowSize(WINDOW_X, WINDOW_Y);
 	glutCreateWindow ("SkeletonJelly Debug");
 	glutFullScreen();
@@ -222,7 +234,7 @@ void glInit (int *pargc, char **argv)
 	glutDisplayFunc(glutDisplay);
 	glutIdleFunc(glutIdle);
 
-	glClearColor(1.0f, 153.0f / 255.0f, 100.0f, 1.0);
+	glClearColor(1.0f, 153.0f / 255.0f, .2f, 1.0);
 
 	glDisable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
@@ -234,12 +246,16 @@ void glInit (int *pargc, char **argv)
 int main(int argc, char **argv)
 {
 	g_kinect.setEventCallback(kinect_status, NULL);
-	//g_kinect.setRenderFormat(Kinect::RENDER_RGBA);
+	g_kinect.setRenderFormat(Kinect::RENDER_RGBA);
 	g_kinect.setTicksPerSecond(30);
-	g_kinect.init();
-	//XnUInt32XYPair kImageSize = g_kinect.getImageResolution();
-	//char* kImageBuffer[ * 4];
+	g_kinect.init(Kinect::SENSOR_VGA_30FPS, Kinect::SENSOR_VGA_30FPS);
 
 	glInit(&argc, argv);
+
+	res = g_kinect.getDepthResolution();
+
+	int imageSize = g_kinect.getDepthTexSize();
+	imageBuffer = new unsigned char[imageSize];
+
 	glutMainLoop();
 }

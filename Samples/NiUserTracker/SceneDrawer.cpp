@@ -153,10 +153,10 @@ void DrawDepthMap(const xn::DepthMetaData& dmd, const xn::SceneMetaData& smd)
 	static unsigned char* pDepthTexBuf;
 	static int texWidth, texHeight;
 
-	 float topLeftX;
-	 float topLeftY;
-	 float bottomRightY;
-	 float bottomRightX;
+	float topLeftX;
+	float topLeftY;
+	float bottomRightY;
+	float bottomRightX;
 	float texXpos;
 	float texYpos;
 

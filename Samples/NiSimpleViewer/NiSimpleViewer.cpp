@@ -48,7 +48,7 @@ using namespace xn;
 #define DISPLAY_MODE_OVERLAY	1
 #define DISPLAY_MODE_DEPTH		2
 #define DISPLAY_MODE_IMAGE		3
-#define DEFAULT_DISPLAY_MODE	DISPLAY_MODE_DEPTH
+#define DEFAULT_DISPLAY_MODE	DISPLAY_MODE_IMAGE
 
 #define MAX_DEPTH 10000
 
@@ -137,55 +137,23 @@ void glutDisplay (void)
 
 	xnOSMemSet(g_pTexMap, 0, g_nTexMapX*g_nTexMapY*sizeof(XnRGB24Pixel));
 
-	// check if we need to draw image frame to texture
-	if (g_nViewState == DISPLAY_MODE_OVERLAY ||
-		g_nViewState == DISPLAY_MODE_IMAGE)
+	//////////////////// DRAW ////////////////////////
+	const XnRGB24Pixel* pImageRow = g_imageMD.RGB24Data();
+	XnRGB24Pixel* pTexRow = g_pTexMap + g_imageMD.YOffset() * g_nTexMapX;
+
+	for (XnUInt y = 0; y < g_imageMD.YRes(); ++y)
 	{
-		const XnRGB24Pixel* pImageRow = g_imageMD.RGB24Data();
-		XnRGB24Pixel* pTexRow = g_pTexMap + g_imageMD.YOffset() * g_nTexMapX;
-
-		for (XnUInt y = 0; y < g_imageMD.YRes(); ++y)
+		const XnRGB24Pixel* pImage = pImageRow;
+		XnRGB24Pixel* pTex = pTexRow + g_imageMD.XOffset();
+		for (XnUInt x = 0; x < g_imageMD.XRes(); ++x, ++pImage, ++pTex)
 		{
-			const XnRGB24Pixel* pImage = pImageRow;
-			XnRGB24Pixel* pTex = pTexRow + g_imageMD.XOffset();
-
-			for (XnUInt x = 0; x < g_imageMD.XRes(); ++x, ++pImage, ++pTex)
-			{
-				*pTex = *pImage;
-			}
-
-			pImageRow += g_imageMD.XRes();
-			pTexRow += g_nTexMapX;
+			*pTex = *pImage;
 		}
+			
+		pImageRow += g_imageMD.XRes();
+		pTexRow += g_nTexMapX;
 	}
-
-	// check if we need to draw depth frame to texture
-	if (g_nViewState == DISPLAY_MODE_OVERLAY ||
-		g_nViewState == DISPLAY_MODE_DEPTH)
-	{
-		const XnDepthPixel* pDepthRow = g_depthMD.Data();
-		XnRGB24Pixel* pTexRow = g_pTexMap + g_depthMD.YOffset() * g_nTexMapX;
-
-		for (XnUInt y = 0; y < g_depthMD.YRes(); ++y)
-		{
-			const XnDepthPixel* pDepth = pDepthRow;
-			XnRGB24Pixel* pTex = pTexRow + g_depthMD.XOffset();
-
-			for (XnUInt x = 0; x < g_depthMD.XRes(); ++x, ++pDepth, ++pTex)
-			{
-				if (*pDepth != 0)
-				{
-					int nHistValue = g_pDepthHist[*pDepth];
-					pTex->nRed = nHistValue;
-					pTex->nGreen = nHistValue;
-					pTex->nBlue = 0;
-				}
-			}
-
-			pDepthRow += g_depthMD.XRes();
-			pTexRow += g_nTexMapX;
-		}
-	}
+	//////////////////////////////////////////////
 
 	// Create the OpenGL texture map
 	glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP_SGIS, GL_TRUE);

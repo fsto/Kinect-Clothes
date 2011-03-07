@@ -4,3 +4,9 @@
 \\vmware-host\Shared Folders\tmp\kinect-clothes\Samples\SimpleViewer.net\obj\x86\Debug\ResolveAssemblyReference.cache
 \\vmware-host\Shared Folders\tmp\kinect-clothes\Samples\SimpleViewer.net\obj\x86\Debug\SimpleViewer.net.exe
 \\vmware-host\Shared Folders\tmp\kinect-clothes\Samples\SimpleViewer.net\obj\x86\Debug\SimpleViewer.net.pdb
+C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Samples\Bin\Debug\SimpleViewer.net.exe.config
+C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Samples\Bin\Debug\SimpleViewer.net.exe
+C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Samples\Bin\Debug\SimpleViewer.net.pdb
+C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Samples\SimpleViewer.net\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Samples\SimpleViewer.net\obj\x86\Debug\SimpleViewer.net.exe
+C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Samples\SimpleViewer.net\obj\x86\Debug\SimpleViewer.net.pdb

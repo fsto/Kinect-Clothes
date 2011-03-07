@@ -11,21 +11,11 @@
 #define KINECT_DEFAULT_WIDTH 640
 #define KINECT_DEFAULT_HEIGHT 480
 #define KINECT_DEFAULT_FPS 30
-#define KINECT_JOINT_MAX 7
 
 struct KinectUser
 {
 	int status;
-
-	struct Hand
-	{
-		std::list<XnPoint3D> history;
-		XnPoint3D pos;
-		bool tracked;
-		float variance;
-	} left, right;
-
-	XnSkeletonJointPosition joints[KINECT_JOINT_MAX];
+	XnSkeletonJointPosition joints[24];
 	XnPoint3D centerOfMass;
 };
 
@@ -33,16 +23,32 @@ class Kinect
 {
 
 public:
-	enum Joints
+	static const int KINECT_JOINT_MAX=24;
+
+	xn::DepthGenerator* Depth(){return &_depth;}
+
+/*	enum Joints
 	{
-		JOINT_HEAD,
-		JOINT_HAND_LEFT,
-		JOINT_HAND_RIGHT,
-		JOINT_ELBOW_LEFT,
-		JOINT_ELBOW_RIGHT,
-		JOINT_SHOULDER_LEFT,
-		JOINT_SHOULDER_RIGHT
-	};
+	x	XN_SKEL_HEAD, 
+    x   XN_SKEL_NECK, 
+    x   XN_SKEL_TORSO, 
+        XN_SKEL_WAIST, 
+        XN_SKEL_LEFT_COLLAR, 
+    x   XN_SKEL_LEFT_SHOULDER, 
+    x   XN_SKEL_LEFT_ELBOW, 
+        XN_SKEL_LEFT_WRIST, 
+    x   XN_SKEL_LEFT_HAND, 
+        XN_SKEL_LEFT_FINGERTIP, 
+        XN_SKEL_RIGHT_COLLAR, 
+    x   XN_SKEL_RIGHT_SHOULDER, 
+    x   XN_SKEL_RIGHT_ELBOW, 
+        XN_SKEL_RIGHT_WRIST, 
+    x   XN_SKEL_RIGHT_HAND, 
+        XN_SKEL_RIGHT_FINGERTIP, 
+        XN_SKEL_LEFT_HIP, 
+        XN_SKEL_LEFT_KNEE, 
+        XN_SKEL_LEFT_ANKLE, 
+	};*/
 
 	enum RenderFormat
 	{
@@ -120,8 +126,7 @@ private:
 	KinectUser *_userData[MAX_USERS];
 
     void updateUserData(XnUserID id, KinectUser *data);
-	void processHand(KinectUser::Hand *hand, XnSkeletonJointPosition *jointWorld, float backPlane, float planeDepth, float xRes, float yRes);
-
+	
 	Callback _eventCallback;
 	void *_callbackData;
 
