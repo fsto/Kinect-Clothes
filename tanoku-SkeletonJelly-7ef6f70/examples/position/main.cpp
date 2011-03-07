@@ -22,6 +22,11 @@ char g_leftHand[64] = {0};
 char g_rightHand[64] = {0};
 XnUInt32XYPair res;
 
+float imageOffset[2];
+
+float scale = 1.15f;
+
+
 unsigned char* imageBuffer;
 
 
@@ -73,10 +78,6 @@ void drawRealImage()
 {
 	g_kinect.renderImage(imageBuffer, 0);
 
-	XnUInt32XYPair res;
-
-	res = g_kinect.getDepthResolution();
-
 	glColor3f(1,1,1);
 
 	glBindTexture(GL_TEXTURE_2D, 1);
@@ -88,27 +89,31 @@ void drawRealImage()
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, res.X, res.Y, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageBuffer);
 
+	glTranslatef(imageOffset[0], imageOffset[1], 0);
+
 	glBegin(GL_QUADS);
 		glTexCoord2f(0,1);
-		glVertex2f(-1,-1);
+		glVertex2f(-scale,-scale);
 
 		glTexCoord2f(1,1);
-		glVertex2f(1,-1);
+		glVertex2f(scale,-scale);
 
 		glTexCoord2f(1,0);
-		glVertex2f(1,1);
+		glVertex2f(scale,scale);
 
 		glTexCoord2f(0,0);
-		glVertex2f(-1,1);
+		glVertex2f(-scale,scale);
 	glEnd();
 
+	_snprintf(g_rightHand, 64, "Scale: %.2f\n", scale);
+	_snprintf(g_leftHand, 64, "Offset: %.2fx%.2f\n", imageOffset[0], imageOffset[1]);
 }
 
 void drawJoint(XnSkeletonJointPosition& joint)
 {
 	convertToProjCoordinates(joint);
 
-	glColor3f(1.0f, 1.0f, 1.0f);
+	glColor3f(.4f, .5f, .8f);
 			
 	glBegin(GL_POINTS);
 	glVertex3f(joint.position.X, joint.position.Y, .1f);
@@ -213,12 +218,38 @@ void glutIdle()
 	time = now;
 }
 
+void glutSpecialKeyboard(int key, int x, int y)
+{
+	switch(key)
+	{
+	case GLUT_KEY_DOWN:
+		scale -= .01f;
+		break;
+	case GLUT_KEY_UP:
+		scale += .01f;
+		break;
+	}
+}
+
 void glutKeyboard (unsigned char key, int x, int y)
 {
 	switch (key)
 	{
 	case 27:
 		exit(0);
+		break;
+	case 's':
+		imageOffset[1] += .01f;
+		break;
+	case 'w':
+		imageOffset[1] -= .01f;
+		break;
+	case 'd':
+		imageOffset[0] -= .01f;
+		break;
+	case 'a':
+		imageOffset[0] += .01f;
+		break;
 	}
 }
 void glInit (int *pargc, char **argv)
@@ -226,10 +257,11 @@ void glInit (int *pargc, char **argv)
 	glutInit(pargc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInitWindowSize(WINDOW_X, WINDOW_Y);
-	glutCreateWindow ("SkeletonJelly Debug");
+	glutCreateWindow ("Clothes");
 	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
 
+	glutSpecialFunc(glutSpecialKeyboard);
 	glutKeyboardFunc(glutKeyboard);
 	glutDisplayFunc(glutDisplay);
 	glutIdleFunc(glutIdle);
@@ -245,6 +277,9 @@ void glInit (int *pargc, char **argv)
 
 int main(int argc, char **argv)
 {
+	imageOffset[0] = 0;
+	imageOffset[1] = 0;
+
 	g_kinect.setEventCallback(kinect_status, NULL);
 	g_kinect.setRenderFormat(Kinect::RENDER_RGBA);
 	g_kinect.setTicksPerSecond(30);

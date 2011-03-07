@@ -136,7 +136,7 @@ XnStatus Kinect::init(SensorMode depthMode, SensorMode imageMode)
     	}
     
 		/* TODO: XN_SKEL_PROFILE_HEAD_HANDS  ? */
-    	_userGen.GetSkeletonCap().SetSkeletonProfile(XN_SKEL_PROFILE_UPPER);
+		_userGen.GetSkeletonCap().SetSkeletonProfile(XN_SKEL_PROFILE_ALL);
 	}
 
 	_error = _context.StartGeneratingAll();
