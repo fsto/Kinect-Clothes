@@ -1,5 +1,0 @@
-D:\Projects\SDK\OpenNI\Platform\Win32\Redist\Samples\Bin\Debug\SimpleViewer.net.exe
-D:\Projects\SDK\OpenNI\Platform\Win32\Redist\Samples\Bin\Debug\SimpleViewer.net.pdb
-D:\Projects\SDK\OpenNI\Platform\Win32\Redist\Samples\SimpleViewer.net\obj\x86\Debug\ResolveAssemblyReference.cache
-D:\Projects\SDK\OpenNI\Platform\Win32\Redist\Samples\SimpleViewer.net\obj\x86\Debug\SimpleViewer.net.exe
-D:\Projects\SDK\OpenNI\Platform\Win32\Redist\Samples\SimpleViewer.net\obj\x86\Debug\SimpleViewer.net.pdb
