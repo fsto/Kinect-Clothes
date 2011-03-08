@@ -1,12 +1,17 @@
-﻿Build started 3/8/2011 11:58:14 AM.
+﻿Build started 3/8/2011 2:20:39 PM.
      1>Project "C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Clothes\position.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Kinect-Clothes.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          All outputs are up-to-date.
        Link:
-         All outputs are up-to-date.
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Clothes\Debug\Kinect-Clothes.exe" /NOLOGO /LIBPATH:Lib openni.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Kinect-Clothes.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Clothes\Debug\Kinect-Clothes.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Clothes\Debug\Kinect-Clothes.lib" /MACHINE:X86 Debug\main.obj
+         Debug\skeletonjelly.obj
+         Debug\UserController.obj
+         LINK : C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Clothes\Debug\Kinect-Clothes.exe not found or not built by the last incremental link; performing full link
          position.vcxproj -> C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Clothes\Debug\Kinect-Clothes.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Clothes\Debug\Kinect-Clothes.exe;#1" /manifest "Debug\Kinect-Clothes.exe.intermediate.manifest"
        FinalizeBuildStatus:
          Deleting file "Debug\Kinect-Clothes.unsuccessfulbuild".
          Touching "Debug\Kinect-Clothes.lastbuildstate".
@@ -14,4 +19,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.09
+Time Elapsed 00:00:00.53

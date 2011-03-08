@@ -35,7 +35,10 @@
     <ClInclude Include="skeletonjelly.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Cloth.h">
+    <ClInclude Include="Garment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Outfit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

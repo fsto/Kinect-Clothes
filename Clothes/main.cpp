@@ -23,13 +23,13 @@ char g_leftHand[64] = {0};
 char g_rightHand[64] = {0};
 XnUInt32XYPair res;
 
+bool drawImage = true;
+
 float imageOffset[2];
 
-float scale = 1.05f;
-
+float scale = 0;
 
 unsigned char* imageBuffer;
-
 
 const KinectUser *g_userData = NULL;
 
@@ -47,16 +47,12 @@ void convertToProjCoordinates(XnSkeletonJointPosition &joint)
 {
 	xn::DepthGenerator* depth = g_kinect.Depth();
 	depth->ConvertRealWorldToProjective(1,&joint.position,&joint.position);
-
-	joint.position.X /= res.X;
-	joint.position.Y /= res.Y;
 }
 
 
 void kinect_status(Kinect *k, Kinect::CallbackType cb_type, XnUserID id, void *data)
 {
 	_snprintf(g_message, 64, "User [%d]: %s", id, MESSAGES[cb_type]);
-	//_snprintf("%s\n", g_message);
 
 	if (cb_type == Kinect::CB_NEW_USER && id == 1)
 	{
@@ -74,33 +70,37 @@ void glPrintString(void *font, char *str)
 	}
 }
 
-void drawRealImage()
+void drawBackground()
 {
-	g_kinect.renderImage(imageBuffer, 0);
+	if(drawImage)
+		g_kinect.renderImage(imageBuffer, 0);
+	else
+		g_kinect.renderDepth(imageBuffer, true, 0);
 
 	glColor3f(1,1,1);
 
-	glBindTexture(GL_TEXTURE_2D, 1);
+	glBindTexture(GL_TEXTURE_2D, 0);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, res.X, res.Y, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageBuffer);
 
 	glBegin(GL_QUADS);
 		glTexCoord2f(0,1);
-		glVertex2f(-scale,-scale);
+		glVertex2f(-scale,res.Y -scale);
 
 		glTexCoord2f(1,1);
-		glVertex2f(scale,-scale);
+		glVertex2f(res.X + scale, res.Y -scale);
 
 		glTexCoord2f(1,0);
-		glVertex2f(scale,scale);
+		glVertex2f(res.X + scale, scale);
 
 		glTexCoord2f(0,0);
-		glVertex2f(-scale,scale);
+		glVertex2f(-scale, scale);
 	glEnd();
 
 	_snprintf(g_rightHand, 64, "Scale: %.2f\n", scale);
@@ -120,9 +120,7 @@ void drawJoint(XnSkeletonJointPosition& joint)
 
 void drawTracking()
 {
-	glOrtho(0, 1.0, 1.0, 0.0f, -1.0, 1.0);
-
-	glPointSize(16.0f);
+	glPointSize(15.0f);
 	glLineWidth(8.0f);
 
 	if (g_userData)
@@ -182,6 +180,7 @@ void drawHUD()
 
 	glEnable(GL_DEPTH_TEST); 
 	glPopMatrix();
+
 }
 
 
@@ -199,7 +198,8 @@ void glutDisplay()
 	glDisable(GL_DEPTH_TEST); 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	drawRealImage();
+	glOrtho(0, res.X, res.Y, 0, -1.0, 1.0);
+	drawBackground();
 
 	glDisable(GL_TEXTURE_2D);
 
@@ -226,10 +226,10 @@ void glutSpecialKeyboard(int key, int x, int y)
 	switch(key)
 	{
 	case GLUT_KEY_DOWN:
-		scale -= .01f;
+		scale -= 10;
 		break;
 	case GLUT_KEY_UP:
-		scale += .01f;
+		scale += 10;
 		break;
 	}
 }
@@ -244,16 +244,19 @@ void glutKeyboard (unsigned char key, int x, int y)
 		exit(0);
 		break;
 	case 's':
-		imageOffset[1] += .01f;
+		imageOffset[1] += 1;
 		break;
 	case 'w':
-		imageOffset[1] -= .01f;
+		imageOffset[1] -= 1;
 		break;
 	case 'a':
-		imageOffset[0] -= .01f;
+		imageOffset[0] -= 1;
 		break;
 	case 'd':
-		imageOffset[0] += .01f;
+		imageOffset[0] += 1;
+		break;
+	case ' ':
+		drawImage = !drawImage;
 		break;
 	}
 }
@@ -261,7 +264,7 @@ void glInit (int *pargc, char **argv)
 {
 	glutInit(pargc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-	glutInitWindowSize(WINDOW_X, WINDOW_Y);
+	glutInitWindowSize(res.X, res.Y);
 	glutCreateWindow ("Clothes");
 	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
@@ -282,17 +285,17 @@ void glInit (int *pargc, char **argv)
 
 int main(int argc, char **argv)
 {
-	imageOffset[0] = 0.1f;
-	imageOffset[1] = 0.05f;
+	imageOffset[0] = 0;
+	imageOffset[1] = 0;
 
 	g_kinect.setEventCallback(kinect_status, NULL);
 	g_kinect.setRenderFormat(Kinect::RENDER_RGBA);
 	g_kinect.setTicksPerSecond(30);
 	g_kinect.init(Kinect::SENSOR_VGA_30FPS, Kinect::SENSOR_VGA_30FPS);
 
-	glInit(&argc, argv);
-
 	res = g_kinect.getDepthResolution();
+
+	glInit(&argc, argv);
 
 	int imageSize = g_kinect.getDepthTexSize();
 	imageBuffer = new unsigned char[imageSize];

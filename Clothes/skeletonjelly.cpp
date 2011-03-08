@@ -87,17 +87,6 @@ XnStatus Kinect::init(SensorMode depthMode, SensorMode imageMode)
 	_error = _context.Init();
 	CHECK_RC(_error);
 
-	/* init depth generator */
-	{
-    	_error = _depth.Create(_context, &qDepth);
-    	CHECK_RC(_error);
-    
-    	_error = _depth.SetMapOutputMode(sensorModes[depthMode]);
-    	CHECK_RC(_error);
-
-		_depth.GetMirrorCap().SetMirror(true);
-	}
-
 	if (imageMode != SENSOR_DISABLED) /* init image generator */
 	{
     	_error = _image.Create(_context, &qImage);
@@ -111,6 +100,19 @@ XnStatus Kinect::init(SensorMode depthMode, SensorMode imageMode)
 
 		_image.GetMirrorCap().SetMirror(true);
 		_gotImage = true;
+	}
+
+	/* init depth generator */
+	{
+    	_error = _depth.Create(_context, &qDepth);
+    	CHECK_RC(_error);
+    
+    	_error = _depth.SetMapOutputMode(sensorModes[depthMode]);
+    	CHECK_RC(_error);
+
+		_depth.GetMirrorCap().SetMirror(true);
+
+		_depth.GetAlternativeViewPointCap().SetViewPoint(_image);
 	}
 
 	/* init user generator */
@@ -460,8 +462,8 @@ void Kinect::updateUserData(XnUserID id, KinectUser *data)
 	_userGen.GetCoM(id, data->centerOfMass);
 	_depth.ConvertRealWorldToProjective(1, &data->centerOfMass, &data->centerOfMass);
 
-	data->centerOfMass.X /= (float)resolution.X;
-	data->centerOfMass.Y /= (float)resolution.Y;
+//	data->centerOfMass.X /= (float)resolution.X;
+//	data->centerOfMass.Y /= (float)resolution.Y;
 }
 
 char const* Kinect::errorMessage()

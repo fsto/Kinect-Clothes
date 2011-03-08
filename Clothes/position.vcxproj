@@ -74,8 +74,9 @@
     <ClCompile Include="UserController.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Cloth.h" />
+    <ClInclude Include="Garment.h" />
     <ClInclude Include="KinectUser.h" />
+    <ClInclude Include="Outfit.h" />
     <ClInclude Include="skeletonjelly.hpp" />
     <ClInclude Include="UserController.h" />
   </ItemGroup>
