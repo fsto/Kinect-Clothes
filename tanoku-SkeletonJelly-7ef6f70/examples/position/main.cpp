@@ -89,8 +89,6 @@ void drawRealImage()
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, res.X, res.Y, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageBuffer);
 
-	glTranslatef(imageOffset[0], imageOffset[1], 0);
-
 	glBegin(GL_QUADS);
 		glTexCoord2f(0,1);
 		glVertex2f(-scale,-scale);
@@ -129,6 +127,9 @@ void drawTracking()
 
 	if (g_userData)
 	{
+		glPushMatrix();
+		glTranslatef(imageOffset[0], imageOffset[1], 0);
+
 		const XnPoint3D *com = &g_userData->centerOfMass;
 
     	glColor3f(0.66, 0.33, 0.33);
@@ -144,6 +145,7 @@ void drawTracking()
         if (g_kinect.userStatus() & Kinect::USER_TRACKING)
 		{
 			XnSkeletonJointPosition joint;
+
 			for(int i=0;i<g_kinect.KINECT_JOINT_MAX;++i)
 			{
 				joint = g_userData->joints[i];
@@ -152,6 +154,7 @@ void drawTracking()
 			}
 			printf("\n");
 		}
+		glPopMatrix();
 	}
 }
 
@@ -244,10 +247,10 @@ void glutKeyboard (unsigned char key, int x, int y)
 	case 'w':
 		imageOffset[1] -= .01f;
 		break;
-	case 'd':
+	case 'a':
 		imageOffset[0] -= .01f;
 		break;
-	case 'a':
+	case 'd':
 		imageOffset[0] += .01f;
 		break;
 	}
