@@ -1,0 +1,17 @@
+﻿Build started 3/3/2011 5:17:08 PM.
+Project "C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\tanoku-SkeletonJelly-7ef6f70\examples\position\position.vcxproj" on node 2 (build target(s)).
+PrepareForBuild:
+  Creating directory "C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\tanoku-SkeletonJelly-7ef6f70\Release\".
+InitializeBuildStatus:
+  Creating "Release\position.unsuccessfulbuild" because "AlwaysCreate" was specified.
+ClCompile:
+  C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\src\skeletonjelly.cpp main.cpp
+  skeletonjelly.cpp
+c:\documents and settings\administrator.fsto-fe1d070f89\my documents\visual studio 2010\projects\tanoku-skeletonjelly-7ef6f70\src\skeletonjelly.hpp(6): fatal error C1083: Cannot open include file: 'XnOpenNI.h': No such file or directory
+  main.cpp
+c:\documents and settings\administrator.fsto-fe1d070f89\my documents\visual studio 2010\projects\tanoku-skeletonjelly-7ef6f70\examples\position\../../src/skeletonjelly.hpp(6): fatal error C1083: Cannot open include file: 'XnOpenNI.h': No such file or directory
+Done Building Project "C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\tanoku-SkeletonJelly-7ef6f70\examples\position\position.vcxproj" (build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:02.01

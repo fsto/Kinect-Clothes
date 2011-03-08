@@ -1,0 +1,17 @@
+﻿Build started 3/8/2011 11:58:14 AM.
+     1>Project "C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Clothes\position.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\Kinect-Clothes.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+       Link:
+         All outputs are up-to-date.
+         position.vcxproj -> C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Clothes\Debug\Kinect-Clothes.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\Kinect-Clothes.unsuccessfulbuild".
+         Touching "Debug\Kinect-Clothes.lastbuildstate".
+     1>Done Building Project "C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Clothes\position.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.09
