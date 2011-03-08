@@ -3,6 +3,7 @@
 #include "GL/gl.h"
 #include "skeletonjelly.hpp"
 #include "KinectUser.h"
+#include "Garment.h"
 
 #define WINDOW_X 800
 #define WINDOW_Y 600
@@ -32,6 +33,8 @@ float scale = 0;
 unsigned char* imageBuffer;
 
 const KinectUser *g_userData = NULL;
+
+Garment* g = 0;
 
 static const char *MESSAGES[] =
 {
@@ -118,8 +121,42 @@ void drawJoint(XnSkeletonJointPosition& joint)
 	glEnd();
 }
 
+
+//////////////////////TMP////////////////////////
+
+void drawTexture()
+{
+	if(!g)
+		g = new Garment("buzz-model/torso.png");
+
+	if(g_userData)
+	{
+		XnFloat x = g_userData->centerOfMass.X;
+		XnFloat y = g_userData->centerOfMass.Y;
+		glPushMatrix();
+		glTranslatef(0,-30,0);
+
+		g->bindTexture();
+		glEnable(GL_TEXTURE_2D);
+		glBegin(GL_QUADS);
+		glTexCoord2f(0,1);
+		glVertex2f(x-80,y-80);
+		glTexCoord2f(0,0);
+		glVertex2f(x-80,y+80);
+		glTexCoord2f(1,0);
+		glVertex2f(x+80,y+80);
+		glTexCoord2f(1,1);
+		glVertex2f(x+80,y-80);
+		glEnd();
+		glPopMatrix();
+	}
+}
+
+/////////////////////////////////////////////////
+
 void drawTracking()
 {
+	drawTexture();
 	glPointSize(15.0f);
 	glLineWidth(8.0f);
 
@@ -281,6 +318,9 @@ void glInit (int *pargc, char **argv)
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
+
+	glEnable (GL_BLEND);
+	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 int main(int argc, char **argv)
@@ -299,6 +339,8 @@ int main(int argc, char **argv)
 
 	int imageSize = g_kinect.getDepthTexSize();
 	imageBuffer = new unsigned char[imageSize];
+
+	Garment::InitializeLibs();
 
 	glutMainLoop();
 }
