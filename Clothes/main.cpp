@@ -3,17 +3,10 @@
 #include "GL/gl.h"
 #include "skeletonjelly.hpp"
 #include "KinectUser.h"
-#include "Garment.h"
+#include "UserController.h"
 
 #define WINDOW_X 800
 #define WINDOW_Y 600
-
-#define ROOM_X 4.0f // m
-#define ROOM_Y 3.0f // m
-
-#define GRID_SIZE 0.25f // 25 cm
-
-#define SCALE(x) ((x) / 1000.0f)
 
 bool g_running = false;
 Kinect g_kinect;
@@ -22,19 +15,16 @@ char g_message[64] = {0};
 char g_coords[64] = {0};
 char g_leftHand[64] = {0};
 char g_rightHand[64] = {0};
+
 XnUInt32XYPair res;
 
 bool drawImage = true;
 
-float imageOffset[2];
-
-float scale = 0;
+UserController *uc;
 
 unsigned char* imageBuffer;
 
 const KinectUser *g_userData = NULL;
-
-Garment* g = 0;
 
 static const char *MESSAGES[] =
 {
@@ -94,102 +84,31 @@ void drawBackground()
 
 	glBegin(GL_QUADS);
 		glTexCoord2f(0,1);
-		glVertex2f(-scale,res.Y -scale);
+		glVertex2f(0, res.Y);
 
 		glTexCoord2f(1,1);
-		glVertex2f(res.X + scale, res.Y -scale);
+		glVertex2f(res.X, res.Y);
 
 		glTexCoord2f(1,0);
-		glVertex2f(res.X + scale, scale);
+		glVertex2f(res.X, 0);
 
 		glTexCoord2f(0,0);
-		glVertex2f(-scale, scale);
+		glVertex2f(0, 0);
 	glEnd();
 
-	_snprintf(g_rightHand, 64, "Scale: %.2f\n", scale);
-	_snprintf(g_leftHand, 64, "Offset: %.2fx%.2f\n", imageOffset[0], imageOffset[1]);
+//	_snprintf(g_rightHand, 64, "Scale: %.2f\n", scale);
+//	_snprintf(g_leftHand, 64, "Offset: %.2fx%.2f\n", imageOffset[0], imageOffset[1]);
 }
 
-void drawJoint(XnSkeletonJointPosition& joint)
+void drawUsers()
 {
-	convertToProjCoordinates(joint);
-
-	glColor3f(.4f, .5f, .8f);
-			
-	glBegin(GL_POINTS);
-	glVertex3f(joint.position.X, joint.position.Y, .1f);
-	glEnd();
-}
-
-
-//////////////////////TMP////////////////////////
-
-void drawTexture()
-{
-	if(!g)
-		g = new Garment("buzz-model/torso.png");
-
-	if(g_userData)
+	for(int i=1; i<=g_kinect.getMaxUsers(); ++i)
 	{
-		XnFloat x = g_userData->centerOfMass.X;
-		XnFloat y = g_userData->centerOfMass.Y;
-		glPushMatrix();
-		glTranslatef(0,-30,0);
-
-		g->bindTexture();
-		glEnable(GL_TEXTURE_2D);
-		glBegin(GL_QUADS);
-		glTexCoord2f(0,1);
-		glVertex2f(x-80,y-80);
-		glTexCoord2f(0,0);
-		glVertex2f(x-80,y+80);
-		glTexCoord2f(1,0);
-		glVertex2f(x+80,y+80);
-		glTexCoord2f(1,1);
-		glVertex2f(x+80,y-80);
-		glEnd();
-		glPopMatrix();
-	}
-}
-
-/////////////////////////////////////////////////
-
-void drawTracking()
-{
-	drawTexture();
-	glPointSize(15.0f);
-	glLineWidth(8.0f);
-
-	if (g_userData)
-	{
-		glPushMatrix();
-		glTranslatef(imageOffset[0], imageOffset[1], 0);
-
-		const XnPoint3D *com = &g_userData->centerOfMass;
-
-    	glColor3f(0.66, 0.33, 0.33);
-		if (g_userData->status & Kinect::USER_TRACKING)
-        	glColor3f(0.33, 0.66, 0.33);
-
-		glBegin(GL_POINTS);
-			glVertex3f(com->X, com->Y, 0.1f);
-		glEnd();
-
-		_snprintf(g_coords, 64, "CoM: (%0.4f, %0.4f, %0.4f)\n", com->X, com->Y, com->Z);
-
-        if (g_kinect.userStatus() & Kinect::USER_TRACKING)
+		KinectUser *user = g_kinect.getUserData(i);
+		if(user)
 		{
-			XnSkeletonJointPosition joint;
-
-			for(int i=0;i<g_kinect.KINECT_JOINT_MAX;++i)
-			{
-				joint = g_userData->joints[i];
-				printf("%d: %f,%f\n", i, joint.position.X, joint.position.Y);
-				drawJoint(joint);
-			}
-			printf("\n");
+			uc->drawUser(user);
 		}
-		glPopMatrix();
 	}
 }
 
@@ -217,7 +136,6 @@ void drawHUD()
 
 	glEnable(GL_DEPTH_TEST); 
 	glPopMatrix();
-
 }
 
 
@@ -240,7 +158,7 @@ void glutDisplay()
 
 	glDisable(GL_TEXTURE_2D);
 
-	drawTracking();
+	drawUsers();
 	drawHUD();
 
 	glutSwapBuffers();
@@ -258,39 +176,12 @@ void glutIdle()
 	time = now;
 }
 
-void glutSpecialKeyboard(int key, int x, int y)
-{
-	switch(key)
-	{
-	case GLUT_KEY_DOWN:
-		scale -= 10;
-		break;
-	case GLUT_KEY_UP:
-		scale += 10;
-		break;
-	}
-}
-
-//void newUserTrackin
-
 void glutKeyboard (unsigned char key, int x, int y)
 {
 	switch (key)
 	{
 	case 27:
 		exit(0);
-		break;
-	case 's':
-		imageOffset[1] += 1;
-		break;
-	case 'w':
-		imageOffset[1] -= 1;
-		break;
-	case 'a':
-		imageOffset[0] -= 1;
-		break;
-	case 'd':
-		imageOffset[0] += 1;
 		break;
 	case ' ':
 		drawImage = !drawImage;
@@ -303,10 +194,9 @@ void glInit (int *pargc, char **argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInitWindowSize(res.X, res.Y);
 	glutCreateWindow ("Clothes");
-	glutFullScreen();
+//	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
 
-	glutSpecialFunc(glutSpecialKeyboard);
 	glutKeyboardFunc(glutKeyboard);
 	glutDisplayFunc(glutDisplay);
 	glutIdleFunc(glutIdle);
@@ -325,9 +215,6 @@ void glInit (int *pargc, char **argv)
 
 int main(int argc, char **argv)
 {
-	imageOffset[0] = 0;
-	imageOffset[1] = 0;
-
 	g_kinect.setEventCallback(kinect_status, NULL);
 	g_kinect.setRenderFormat(Kinect::RENDER_RGBA);
 	g_kinect.setTicksPerSecond(30);
@@ -341,6 +228,7 @@ int main(int argc, char **argv)
 	imageBuffer = new unsigned char[imageSize];
 
 	Garment::InitializeLibs();
+	uc = new UserController(&g_kinect);
 
 	glutMainLoop();
 }

@@ -137,7 +137,6 @@ XnStatus Kinect::init(SensorMode depthMode, SensorMode imageMode)
     		_userGen.GetSkeletonCap().GetCalibrationPose(_calibrationPose);
     	}
     
-		/* TODO: XN_SKEL_PROFILE_HEAD_HANDS  ? */
 		_userGen.GetSkeletonCap().SetSkeletonProfile(XN_SKEL_PROFILE_ALL);
 	}
 
@@ -196,12 +195,12 @@ XnStatus Kinect::trackUser(XnUserID id /*= DEFAULT_USER*/)
 
 		return XN_STATUS_OK;
 	}
-
 	return XN_STATUS_NO_MATCH;
 }
 
 void Kinect::onNewUser(XnUserID id)
 {
+	printf("Got user %d\n", id);
 	if (id < MAX_USERS)
 	{
 		if (_userData[id] == 0)
@@ -219,6 +218,7 @@ void Kinect::onNewUser(XnUserID id)
 
 void Kinect::onLostUser(XnUserID id)
 {
+	printf("Lost user %d\n", id);
 	if (userActive(id))
 	{
 		_userData[id]->status = USER_INACTIVE;
