@@ -3,7 +3,7 @@
 *.tlog
 
 #Paths
-Clothes/Debug
+Clothes/Debug/*
 
 # OS generated files #
 ######################
