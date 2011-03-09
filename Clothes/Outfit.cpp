@@ -22,9 +22,3 @@ Outfit::Outfit(char* id)
 		garments[i] = new Garment(path);
 	}
 }
-
-void Garment::bindTexture()
-{
-	ilutGLSetTex(id);
-	ilutGLBindTexImage();
-}
