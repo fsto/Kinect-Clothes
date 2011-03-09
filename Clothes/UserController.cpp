@@ -18,6 +18,56 @@ void UserController::drawJoint(XnSkeletonJointPosition& joint)
 }
 Garment* g;
 Garment* g2;
+<<<<<<< HEAD
+
+void drawTexture(KinectUser* user)
+{
+	glDisable(GL_COLOR_MATERIAL);
+	glColor3f(1,1,1);
+	if(!g)
+	{
+		g = new Garment("skins/buzz-model/torso.png");
+		g2 = new Garment("skins/buzz-model/helmet.png");
+	}
+	XnFloat x = user->centerOfMass.X;
+	XnFloat y = user->centerOfMass.Y;
+	glPushMatrix();
+	glTranslatef(0,-30,0);
+
+	g->bindTexture();
+	glEnable(GL_TEXTURE_2D);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0,1);
+	glVertex2f(x-80,y-80);
+	glTexCoord2f(0,0);
+	glVertex2f(x-80,y+80);
+	glTexCoord2f(1,0);
+	glVertex2f(x+80,y+80);
+	glTexCoord2f(1,1);
+	glVertex2f(x+80,y-80);
+	glEnd();
+
+	glTranslatef(0,-80,0);
+
+	g2->bindTexture();
+	glEnable(GL_TEXTURE_2D);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0,1);
+	glVertex2f(x-80,y-80);
+	glTexCoord2f(0,0);
+	glVertex2f(x-80,y+80);
+	glTexCoord2f(1,0);
+	glVertex2f(x+80,y+80);
+	glTexCoord2f(1,1);
+	glVertex2f(x+80,y-80);
+	glEnd();
+
+	glPopMatrix();
+
+	glDisable(GL_TEXTURE_2D);
+}
+
+=======
 
 void drawTexture(KinectUser* user)
 {
@@ -66,6 +116,7 @@ void drawTexture(KinectUser* user)
 	glDisable(GL_TEXTURE_2D);
 }
 
+>>>>>>> 02c8dd9bdb15ee94334e6ec5efe0b9fe727e9967
 void UserController::drawTrackedUser(KinectUser* user)
 {
 	glPointSize(15.0f);
@@ -107,14 +158,22 @@ void UserController::drawNewUser(KinectUser* user)
 	glColor3f(1,1,1);
 	if(!untracked)
 	{
+<<<<<<< HEAD
+		g = new Garment("skin/untracked.png");
+=======
 		untracked = new Garment("skins/untracked.png");
+>>>>>>> 02c8dd9bdb15ee94334e6ec5efe0b9fe727e9967
 	}
 	XnFloat x = user->centerOfMass.X;
 	XnFloat y = user->centerOfMass.Y;
 	glPushMatrix();
 	//glTranslatef(0,-30,0);
 
+<<<<<<< HEAD
+	g->bindTexture();
+=======
 	untracked->bindTexture();
+>>>>>>> 02c8dd9bdb15ee94334e6ec5efe0b9fe727e9967
 	glEnable(GL_TEXTURE_2D);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0,1);

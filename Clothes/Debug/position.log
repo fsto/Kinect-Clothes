@@ -1,3 +1,19 @@
+<<<<<<< HEAD
+﻿Build started 2011-03-09 12:35:00.
+Project "C:\Documents and Settings\grotto\My Documents\Visual Studio 2010\Projects\Kinect-Clothes\Clothes\position.vcxproj" on node 2 (build target(s)).
+InitializeBuildStatus:
+  Touching "Debug\Kinect-Clothes.unsuccessfulbuild".
+ClCompile:
+  C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\tanoku-SkeletonJelly-7ef6f70\examples\position\GL" /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Outfit.cpp UserController.cpp main.cpp
+  main.cpp
+c:\documents and settings\grotto\my documents\visual studio 2010\projects\kinect-clothes\clothes\outfit.h(12): error C2143: syntax error : missing ';' before '}'
+  UserController.cpp
+c:\documents and settings\grotto\my documents\visual studio 2010\projects\kinect-clothes\clothes\outfit.h(12): error C2143: syntax error : missing ';' before '}'
+  Outfit.cpp
+c:\documents and settings\grotto\my documents\visual studio 2010\projects\kinect-clothes\clothes\outfit.h(12): error C2143: syntax error : missing ';' before '}'
+  Generating Code...
+Done Building Project "C:\Documents and Settings\grotto\My Documents\Visual Studio 2010\Projects\Kinect-Clothes\Clothes\position.vcxproj" (build target(s)) -- FAILED.
+=======
 ﻿Build started 3/9/2011 12:42:31 PM.
      1>Project "C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Clothes\position.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
@@ -19,7 +35,12 @@
          Deleting file "Debug\Kinect-Clothes.unsuccessfulbuild".
          Touching "Debug\Kinect-Clothes.lastbuildstate".
      1>Done Building Project "C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Clothes\position.vcxproj" (build target(s)).
+>>>>>>> 02c8dd9bdb15ee94334e6ec5efe0b9fe727e9967
 
 Build succeeded.
 
+<<<<<<< HEAD
+Time Elapsed 00:00:04.10
+=======
 Time Elapsed 00:00:01.94
+>>>>>>> 02c8dd9bdb15ee94334e6ec5efe0b9fe727e9967
