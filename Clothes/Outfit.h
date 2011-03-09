@@ -9,7 +9,7 @@ class Outfit
 	
 	public:
 		Outfit(char*);
-		Garment* getOutfitGarment(int id){return garments[id] }
+		Garment* getOutfitGarment(int id){return garments[id]; }
 
 		enum OutfitGarments
 		{

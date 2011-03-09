@@ -87,6 +87,8 @@ void UserController::drawTrackedUser(KinectUser* user)
 	}
 }
 
+Garment *untracked;
+
 /*
 * Draw a user that is not tracked. The only available point is CoM.
 */
@@ -103,16 +105,16 @@ void UserController::drawNewUser(KinectUser* user)
 	//draw untracked image
 	glDisable(GL_COLOR_MATERIAL);
 	glColor3f(1,1,1);
-	if(!g)
+	if(!untracked)
 	{
-		g = new Garment("skin/untracked.png");
+		untracked = new Garment("skins/untracked.png");
 	}
 	XnFloat x = user->centerOfMass.X;
 	XnFloat y = user->centerOfMass.Y;
 	glPushMatrix();
 	//glTranslatef(0,-30,0);
 
-	g->bindTexture();
+	untracked->bindTexture();
 	glEnable(GL_TEXTURE_2D);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0,1);
