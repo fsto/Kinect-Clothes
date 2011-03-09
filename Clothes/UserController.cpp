@@ -1,12 +1,12 @@
 #include "UserController.h"
 
-void convertToProjCoordinates(XnSkeletonJointPosition &joint)
+void UserController::convertToProjCoordinates(XnSkeletonJointPosition &joint)
 {
-	xn::DepthGenerator* depth = g_kinect.Depth();
+	xn::DepthGenerator* depth = g_kinect->Depth();
 	depth->ConvertRealWorldToProjective(1,&joint.position,&joint.position);
 }
 
-void drawJoint(XnSkeletonJointPosition& joint)
+void UserController::drawJoint(XnSkeletonJointPosition& joint)
 {
 	convertToProjCoordinates(joint);
 
@@ -17,7 +17,7 @@ void drawJoint(XnSkeletonJointPosition& joint)
 	glEnd();
 }
 
-void drawTrackedUser(KinectUser* g_userData)
+void UserController::drawTrackedUser(KinectUser* g_userData)
 {
 	glPointSize(15.0f);
 	glLineWidth(8.0f);
@@ -40,7 +40,7 @@ void drawTrackedUser(KinectUser* g_userData)
 /*
 * Draw a user that is not tracked. The only available point is CoM.
 */
-void drawNewUser(KinectUser* g_userData)
+void UserController::drawNewUser(KinectUser* g_userData)
 {
 	glPointSize(15.0f);
 	const XnPoint3D *com = &g_userData->centerOfMass;
@@ -48,14 +48,64 @@ void drawNewUser(KinectUser* g_userData)
 	glBegin(GL_POINTS);
 		glVertex3f(com->X, com->Y, 0.1f);
 	glEnd();
-//	_snprintf(g_coords, 64, "CoM: (%0.4f, %0.4f, %0.4f)\n", com->X, com->Y, com->Z);
-
 }
 
-void drawUser(KinectUser* g_userData)
+
+Garment* g;
+Garment* g2;
+
+void drawTexture(KinectUser* user)
+{
+	glDisable(GL_COLOR_MATERIAL);
+	glColor3f(1,1,1);
+	if(!g)
+	{
+		g = new Garment("buzz-model/torso.png");
+		g2 = new Garment("buzz-model/helmet.png");
+	}
+	XnFloat x = user->centerOfMass.X;
+	XnFloat y = user->centerOfMass.Y;
+	glPushMatrix();
+	glTranslatef(0,-30,0);
+
+	g->bindTexture();
+	glEnable(GL_TEXTURE_2D);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0,1);
+	glVertex2f(x-80,y-80);
+	glTexCoord2f(0,0);
+	glVertex2f(x-80,y+80);
+	glTexCoord2f(1,0);
+	glVertex2f(x+80,y+80);
+	glTexCoord2f(1,1);
+	glVertex2f(x+80,y-80);
+	glEnd();
+
+	glTranslatef(0,-80,0);
+
+	g2->bindTexture();
+	glEnable(GL_TEXTURE_2D);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0,1);
+	glVertex2f(x-80,y-80);
+	glTexCoord2f(0,0);
+	glVertex2f(x-80,y+80);
+	glTexCoord2f(1,0);
+	glVertex2f(x+80,y+80);
+	glTexCoord2f(1,1);
+	glVertex2f(x+80,y-80);
+	glEnd();
+
+	glPopMatrix();
+
+	glDisable(GL_TEXTURE_2D);
+}
+
+void UserController::drawUser(KinectUser* g_userData)
 {
 	if (g_userData)
 	{
+		drawTexture(g_userData);
 		if (g_userData->status & Kinect::USER_TRACKING)
 			drawTrackedUser(g_userData);
 		else
@@ -63,12 +113,12 @@ void drawUser(KinectUser* g_userData)
 	}
 }
 
-void nextHelmet(KinectUser* g_userData)
+void UserController::nextHelmet(KinectUser* g_userData)
 {
 
 }
 
-void nextOutfit(KinectUser* g_userData)
+void UserController::nextOutfit(KinectUser* g_userData)
 {
 
 }

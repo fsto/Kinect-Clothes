@@ -20,6 +20,8 @@ class Kinect
 public:
 	static const int KINECT_JOINT_MAX=24;
 
+	int getMaxUsers(){return MAX_USERS;}
+
 	xn::DepthGenerator* Depth(){return &_depth;}
 
 	enum RenderFormat
@@ -62,7 +64,7 @@ public:
 private:
 	static const int MAX_DEPTH = 4096;
 	static const int DEPTH_MASK = MAX_DEPTH - 1;
-	static const unsigned int MAX_USERS = 3;
+	static const unsigned int MAX_USERS = 30;
 
     friend void XN_CALLBACK_TYPE cb_newUser(xn::UserGenerator& generator, XnUserID nId, void *pCookie);
     friend void XN_CALLBACK_TYPE cb_lostUser(xn::UserGenerator& generator, XnUserID nId, void *pCookie);
@@ -127,7 +129,7 @@ public:
 		return (id < MAX_USERS) && (_userData[id] != 0) && (_userData[id]->status != USER_INACTIVE);
     }
 
-	inline const KinectUser *getUserData(XnUserID id)
+	inline KinectUser *getUserData(XnUserID id)
 	{
 		return userActive(id) ? _userData[id] : 0;
 	}
