@@ -1,0 +1,13 @@
+#Logs
+*.log
+*.tlog
+
+#Paths
+/Debug
+
+# OS generated files #
+######################
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db

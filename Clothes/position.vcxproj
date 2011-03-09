@@ -71,6 +71,7 @@
   <ItemGroup>
     <ClCompile Include="Garment.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Outfit.cpp" />
     <ClCompile Include="skeletonjelly.cpp" />
     <ClCompile Include="UserController.cpp" />
   </ItemGroup>

@@ -1,3 +1,23 @@
+<<<<<<< HEAD
+﻿Build started 3/9/2011 10:21:00 AM.
+Project "Z:\tmp\kinect-clothes\Clothes\position.vcxproj" on node 2 (build target(s)).
+InitializeBuildStatus:
+  Creating "Debug\Kinect-Clothes.unsuccessfulbuild" because "AlwaysCreate" was specified.
+ClCompile:
+  C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\tanoku-SkeletonJelly-7ef6f70\examples\position\GL" /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Garment.cpp skeletonjelly.cpp UserController.cpp
+  UserController.cpp
+z:\tmp\kinect-clothes\clothes\usercontroller.cpp(5): error C2065: 'g_kinect' : undeclared identifier
+z:\tmp\kinect-clothes\clothes\usercontroller.cpp(5): error C2228: left of '.Depth' must have class/struct/union
+          type is ''unknown-type''
+  skeletonjelly.cpp
+  Garment.cpp
+  Generating Code...
+Done Building Project "Z:\tmp\kinect-clothes\Clothes\position.vcxproj" (build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:05.09
+=======
 ﻿Build started 3/9/2011 10:58:21 AM.
      1>Project "C:\Users\Fredrik\Documents\kinect\Kinect-Clothes\Clothes\position.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
@@ -24,3 +44,4 @@
 Build succeeded.
 
 Time Elapsed 00:00:02.33
+>>>>>>> 75e0d44b290abda03638ebc86c911c1b9c7445e3
