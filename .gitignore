@@ -2,6 +2,9 @@
 *.log
 *.tlog
 
+#Paths
+/Debug
+
 # OS generated files #
 ######################
 .DS_Store?
