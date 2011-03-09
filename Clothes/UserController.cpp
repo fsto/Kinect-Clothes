@@ -19,7 +19,7 @@ void UserController::drawJoint(XnSkeletonJointPosition& joint)
 Garment* g;
 Garment* g2;
 
-void drawTexture(KinectUser* user)
+/*void drawTexture(KinectUser* user)
 {
 	glDisable(GL_COLOR_MATERIAL);
 	glColor3f(1,1,1);
@@ -64,7 +64,7 @@ void drawTexture(KinectUser* user)
 	glPopMatrix();
 
 	glDisable(GL_TEXTURE_2D);
-}
+}*/
 
 void UserController::drawTrackedUser(KinectUser* user)
 {
@@ -82,7 +82,7 @@ void UserController::drawTrackedUser(KinectUser* user)
 //			printf("%d: %f,%f\n", i, joint.position.X, joint.position.Y);
 			drawJoint(joint);
 		}
-		drawTexture(user);
+//		drawTexture(user);
 //		printf("\n");
 	}
 }
