@@ -14,10 +14,11 @@ Outfit::Outfit(char* id)
 	};
 	for(int i = 0; i < NUM_GARMENTS; i++){
 		char path[64];
-		strcpy(path, "skins/outfit-");
-		strcat(path, id);
-		strcat(path, "/");
-		strcat(path, parts[i]);
+		strcpy_s(path, "skins/outfit-");
+		strcat_s(path, id);
+		strcat_s(path, "/");
+		strcat_s(path, parts[i]);
+		strcat_s(path, ".png");
 			
 		garments[i] = new Garment(path);
 	}
