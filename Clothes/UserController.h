@@ -21,6 +21,8 @@ class UserController
 	void getVectorBetween(XnVector3D&, XnVector3D&, XnVector3D*);
 	float getDistance(XnVector3D&, XnVector3D&);
 	void getMidPoint(XnVector3D&, XnVector3D&, XnVector3D*);
+	void drawTexture(XnVector3D&, XnVector3D&, XnFloat);
+	void drawHelmet(XnVector3D&);
 
 public:
 	UserController(Kinect* k);

@@ -35,73 +35,78 @@ void UserController::drawJoint(XnSkeletonJointPosition& joint)
 	glVertex3f(joint.position.X, joint.position.Y, .1f);
 	glEnd();
 }
-Garment* g;
-Garment* g2;
+Garment* helmet;
 
-/*void drawTexture(KinectUser* user)
+void UserController::drawHelmet(XnVector3D& pt)
 {
 	glDisable(GL_COLOR_MATERIAL);
 	glColor3f(1,1,1);
-	if(!g)
+	if(!helmet)
 	{
-		g = new Garment("buzz-model/torso.png");
-		g2 = new Garment("buzz-model/helmet.png");
+		helmet = new Garment("skins/outfit-1/helmet.png");
 	}
-	XnFloat x = user->centerOfMass.X;
-	XnFloat y = user->centerOfMass.Y;
+	XnFloat x = pt.X;
+	XnFloat y = pt.Y;
 	glPushMatrix();
-	glTranslatef(0,-30,0);
 
-	g->bindTexture();
+	glTranslatef(x,y,0);
+
+	helmet->bindTexture();
 	glEnable(GL_TEXTURE_2D);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0,1);
-	glVertex2f(x-80,y-80);
+	glVertex2f(-100,-60);
 	glTexCoord2f(0,0);
-	glVertex2f(x-80,y+80);
+	glVertex2f(-100,60);
 	glTexCoord2f(1,0);
-	glVertex2f(x+80,y+80);
+	glVertex2f(100,60);
 	glTexCoord2f(1,1);
-	glVertex2f(x+80,y-80);
-	glEnd();
-
-	glTranslatef(0,-80,0);
-
-	g2->bindTexture();
-	glEnable(GL_TEXTURE_2D);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0,1);
-	glVertex2f(x-80,y-80);
-	glTexCoord2f(0,0);
-	glVertex2f(x-80,y+80);
-	glTexCoord2f(1,0);
-	glVertex2f(x+80,y+80);
-	glTexCoord2f(1,1);
-	glVertex2f(x+80,y-80);
+	glVertex2f(100,-60);
 	glEnd();
 
 	glPopMatrix();
 
 	glDisable(GL_TEXTURE_2D);
-}*/
+}
+
+#define PI 3.1415
 
 float UserController::getAngle(XnVector3D& a, XnVector3D& b)
 {
- float dotproduct, lengtha, lengthb, result;
+	XnFloat dotproduct, length, result;
  
-	dotproduct = (a.X * b.X) + (a.Y * b.Y);
-	lengtha = sqrt(a.X * a.X+ a.Y * a.Y);
-	lengthb = sqrt(b.X * b.X + b.Y * b.Y);
+	XnVector3D yAxis;
+	XnVector3D vector;
 
-	result = acos( dotproduct / (lengtha * lengthb) );
+	getVectorBetween(a, b, &vector);
+	
+	length = sqrt(vector.X * vector.X+ vector.Y * vector.Y);
+	yAxis.X=0;
+	yAxis.Y = length;
+
+	dotproduct = (vector.X * yAxis.X) + (vector.Y * yAxis.Y);
+
+	result = acos( dotproduct / (length * length) );
  
+	result += PI/2;
+	if(a.X < b.X)
+	{
+			result = -result;
+	}
+	else
+	{
+		result += PI;
+	}
+	/*
 	if(dotproduct < 0)
 	{
 		if(result > 0)
-			result += 3.1415;
+			result += PI;
 		else
-			result -= 3.1415;
-	}
+			result -= PI;
+	}*/
+
+	printf("Angle %f\n", result);
 	return result;
 }
 
@@ -111,7 +116,7 @@ float UserController::getDistance(XnVector3D& a, XnVector3D& b)
 	return dist;
 }
 
-void getVectorBetween(XnVector3D& a, XnVector3D& b, XnVector3D* c)
+void UserController::getVectorBetween(XnVector3D& a, XnVector3D& b, XnVector3D* c)
 {
 	c->X = a.X-b.X;
 	c->Y = a.Y-b.Y;
@@ -122,14 +127,52 @@ void getVectorBetween(XnVector3D& a, XnVector3D& b, XnVector3D* c)
 */
 void UserController::getMidPoint(XnVector3D& a, XnVector3D& b, XnVector3D* mid) 
 {
-	mid = new XnVector3D();
 	mid->X = (a.X+b.X)/2;
 	mid->Y = (a.Y+b.Y)/2;
 }
+void UserController::drawTexture(XnVector3D& pt1, XnVector3D& pt2, XnFloat w)
+{
+
+	XnVector3D m;
+	XnFloat l = getDistance(pt1, pt2)*0.7;
+	//XnFloat w = ((l / s.X) * s.Y)/2;
+	m.X = (pt1.X + pt2.X)/2;
+	m.Y = (pt1.Y + pt2.Y)/2;
+
+	glColor3f(.9f, .5f, .8f);	
+	glBegin(GL_POINTS);
+		glVertex3f(m.X, m.Y, .1f);
+	glEnd();
+	
+	glDisable(GL_COLOR_MATERIAL);
+	glColor3f(1,1,1);
+	glPushMatrix();
+	glTranslatef(m.X,m.Y,0);
+	XnFloat angle = getAngle(pt1,pt2);
+	glRotatef(-angle*180/PI,0,0,1);
+	glEnable(GL_TEXTURE_2D);
+	glBegin(GL_QUADS);
+	glTexCoord2f(1,1);
+	glVertex2f(l,w);
+	glTexCoord2f(0,1);
+	glVertex2f(l,-w);
+	glTexCoord2f(0,0);
+	glVertex2f(-l,-w);
+	glTexCoord2f(1,0);
+	glVertex2f(-l,w);
+	glEnd();
+	glPopMatrix();
+
+	glDisable(GL_TEXTURE_2D);
+
+}
+
 void UserController::drawTrackedUser(KinectUser* user)
 {
 	glPointSize(15.0f);
 	glLineWidth(8.0f);
+
+	
 
 	if (user)
 	{
@@ -140,30 +183,91 @@ void UserController::drawTrackedUser(KinectUser* user)
 		{
 			joint = user->joints[i];
 			drawJoint(joint);
+
+			convertToProjCoordinates(user->joints[i]);
 		}
+
+		drawHelmet(user->joints[XN_SKEL_HEAD-1].position); //Rita huvud
+
 		Outfit *outfit = OutfitList[user->outfit];
+		XnVector3D pt1, pt2, s;
+		XnFloat w;
 		for(int i=0; i<NUM_GARMENTS;++i)
 		{
 			outfit->getOutfitGarment(i)->bindTexture();
+			bool draw = false;
+			w = 30;
 			switch(i)
 			{
-			case Outfit::OUTFIT_RIGHT_UNDER_ARM:
+			case Outfit::OUTFIT_TORSO:
 				{
-					XnVector3D pt1 = user->joints[XN_SKEL_LEFT_ELBOW-1].position;
-					XnVector3D pt2 = user->joints[XN_SKEL_LEFT_HAND-1].position;
-
-					glBegin(GL_QUADS);
-
-						
-
-					glEnd();
-
-					printf("Coords %.2fx%.2f -> %.2fx%.2f\n", pt1.X, pt1.Y, pt2.X, pt2.Y);
+					getMidPoint(user->joints[XN_SKEL_RIGHT_SHOULDER-1].position,user->joints[XN_SKEL_LEFT_SHOULDER-1].position, &pt1);
+					getMidPoint(user->joints[XN_SKEL_RIGHT_HIP-1].position,user->joints[XN_SKEL_LEFT_HIP-1].position, &pt2);
+					w = 100;					
+					draw = true;
 					break;
 				}
-			}
-		}
+			case Outfit::OUTFIT_LEFT_UPPER_ARM:
+				{
+					pt1 = user->joints[XN_SKEL_RIGHT_SHOULDER-1].position;
+					pt2 = user->joints[XN_SKEL_RIGHT_ELBOW-1].position;
+					draw = true;
+					break;
+				}
+			case Outfit::OUTFIT_LEFT_UNDER_ARM:
+				{
+					pt1 = user->joints[XN_SKEL_RIGHT_ELBOW-1].position;
+					pt2 = user->joints[XN_SKEL_RIGHT_HAND-1].position;
+					draw = true;
+					break;
+				}
+			case Outfit::OUTFIT_LEFT_UPPER_LEG:
+				{
+					pt1 = user->joints[XN_SKEL_RIGHT_HIP-1].position;
+					pt2 = user->joints[XN_SKEL_RIGHT_KNEE-1].position;
+					draw = true;
+					break;
+				}
+			case Outfit::OUTFIT_LEFT_UNDER_LEG:
+				{
+					pt1 = user->joints[XN_SKEL_RIGHT_KNEE-1].position;
+					pt2 = user->joints[XN_SKEL_RIGHT_FOOT-1].position;
+					draw = true;
+					break;
+				}
+			case Outfit::OUTFIT_RIGHT_UPPER_ARM:
+				{
+					pt1 = user->joints[XN_SKEL_LEFT_SHOULDER-1].position;
+					pt2 = user->joints[XN_SKEL_LEFT_ELBOW-1].position;
+					draw = true;
+					break;
+				}
+			case Outfit::OUTFIT_RIGHT_UNDER_ARM:
+				{
+					pt1 = user->joints[XN_SKEL_LEFT_ELBOW-1].position;
+					pt2 = user->joints[XN_SKEL_LEFT_HAND-1].position;
+					draw = true;
+					break;
+				}
+			case Outfit::OUTFIT_RIGHT_UPPER_LEG:
+				{
+					pt1 = user->joints[XN_SKEL_LEFT_HIP-1].position;
+					pt2 = user->joints[XN_SKEL_LEFT_KNEE-1].position;
+					draw = true;
+					break;
+				}
+			case Outfit::OUTFIT_RIGHT_UNDER_LEG:
+				{
+					pt1 = user->joints[XN_SKEL_LEFT_KNEE-1].position;
+					pt2 = user->joints[XN_SKEL_LEFT_FOOT-1].position;
+					draw = true;
+					break;
+				}
 
+			}
+			if(draw)
+				drawTexture(pt1,pt2, w);
+		}
 	}
 }
 

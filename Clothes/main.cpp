@@ -194,7 +194,7 @@ void glInit (int *pargc, char **argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInitWindowSize(res.X, res.Y);
 	glutCreateWindow ("Clothes");
-//	glutFullScreen();
+	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
 
 	glutKeyboardFunc(glutKeyboard);
