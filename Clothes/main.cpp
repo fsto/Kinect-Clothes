@@ -4,6 +4,7 @@
 #include "skeletonjelly.hpp"
 #include "KinectUser.h"
 #include "UserController.h"
+#include "GestureTracker.h"
 
 #define WINDOW_X 800
 #define WINDOW_Y 600
@@ -224,7 +225,8 @@ int main(int argc, char **argv)
 
 	glInit(&argc, argv);
 
-	int imageSize = g_kinect.getDepthTexSize();
+	int imageSize = g_kinect.getImageTexSize();//getDepthTexSize();
+
 	imageBuffer = new unsigned char[imageSize];
 
 	Garment::InitializeLibs();

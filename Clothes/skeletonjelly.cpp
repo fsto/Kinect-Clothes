@@ -139,7 +139,7 @@ XnStatus Kinect::init(SensorMode depthMode, SensorMode imageMode)
     
 		_userGen.GetSkeletonCap().SetSkeletonProfile(XN_SKEL_PROFILE_ALL);
 	}
-
+	
 	_error = _context.StartGeneratingAll();
 	CHECK_RC(_error);
 
@@ -152,6 +152,7 @@ void Kinect::tick(int elapsed)
 {
 	_elapsed += elapsed;
 	_context.WaitAndUpdateAll();
+	_userGen.WaitAndUpdateData();
 
 	if (_elapsed >= _tickTime)
 	{

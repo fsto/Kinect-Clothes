@@ -43,6 +43,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>$(OPEN_NI_LIB);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(OPEN_NI_INCLUDE);$(IncludePath);Include</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -66,10 +69,13 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>Lib;%(AdditionalLibraryDirectories);</AdditionalLibraryDirectories>
+      <AdditionalDependencies>openni.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Garment.cpp" />
+    <ClCompile Include="GestureTracker.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Outfit.cpp" />
     <ClCompile Include="skeletonjelly.cpp" />
@@ -77,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Garment.h" />
+    <ClInclude Include="GestureTracker.h" />
     <ClInclude Include="KinectUser.h" />
     <ClInclude Include="Outfit.h" />
     <ClInclude Include="skeletonjelly.hpp" />

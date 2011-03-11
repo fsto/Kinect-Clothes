@@ -6,14 +6,22 @@ UserController::UserController(Kinect* k)
 : g_kinect(k)
 {
 	std::fstream f("skins/outfits.txt");
-	int count;
-	f >> count;
-	printf("Found %d outfits\n", count);
-	for(int i=1; i<=count; ++i)
+	int countOutfits, countHelmets;
+	f >> countOutfits;
+	f.ignore(1000, '\n');
+	f >> countHelmets;
+	printf("Found %d outfit(s) and %d helmet(s)\n", countOutfits, countHelmets);
+	for(int i=1; i<=countOutfits; ++i)
 	{
 		char buffer[10];
 		sprintf(buffer, "%d", i);
 		OutfitList.push_back(new Outfit(buffer));
+	}
+	for(int i=1; i<=countHelmets; ++i)
+	{
+		char buffer[100];
+		sprintf(buffer, "skins/outfit-%d/helmet.png", i);
+		HelmetList.push_back(new Garment(buffer));
 	}
 }
 
@@ -35,23 +43,18 @@ void UserController::drawJoint(XnSkeletonJointPosition& joint)
 	glVertex3f(joint.position.X, joint.position.Y, .1f);
 	glEnd();
 }
-Garment* helmet;
 
-void UserController::drawHelmet(XnVector3D& pt)
+void UserController::drawHelmet(KinectUser *user, XnVector3D& pt)
 {
 	glDisable(GL_COLOR_MATERIAL);
 	glColor3f(1,1,1);
-	if(!helmet)
-	{
-		helmet = new Garment("skins/outfit-1/helmet.png");
-	}
 	XnFloat x = pt.X;
 	XnFloat y = pt.Y;
 	glPushMatrix();
 
 	glTranslatef(x,y,0);
 
-	helmet->bindTexture();
+	HelmetList[user->helmet]->bindTexture();
 	glEnable(GL_TEXTURE_2D);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0,1);
@@ -97,16 +100,6 @@ float UserController::getAngle(XnVector3D& a, XnVector3D& b)
 	{
 		result += PI;
 	}
-	/*
-	if(dotproduct < 0)
-	{
-		if(result > 0)
-			result += PI;
-		else
-			result -= PI;
-	}*/
-
-	printf("Angle %f\n", result);
 	return result;
 }
 
@@ -122,9 +115,6 @@ void UserController::getVectorBetween(XnVector3D& a, XnVector3D& b, XnVector3D* 
 	c->Y = a.Y-b.Y;
 }
 
-/*
-* REMEMBER TO DELETE RETURNED VECTOR.
-*/
 void UserController::getMidPoint(XnVector3D& a, XnVector3D& b, XnVector3D* mid) 
 {
 	mid->X = (a.X+b.X)/2;
@@ -172,8 +162,6 @@ void UserController::drawTrackedUser(KinectUser* user)
 	glPointSize(15.0f);
 	glLineWidth(8.0f);
 
-	
-
 	if (user)
 	{
 
@@ -187,7 +175,7 @@ void UserController::drawTrackedUser(KinectUser* user)
 			convertToProjCoordinates(user->joints[i]);
 		}
 
-		drawHelmet(user->joints[XN_SKEL_HEAD-1].position); //Rita huvud
+		drawHelmet(user, user->joints[XN_SKEL_HEAD-1].position); //Rita huvud
 
 		Outfit *outfit = OutfitList[user->outfit];
 		XnVector3D pt1, pt2, s;
@@ -329,16 +317,6 @@ void UserController::drawUser(KinectUser* g_userData)
 		else
 			drawNewUser(g_userData);			
 	}
-}
-
-void UserController::nextHelmet(KinectUser* g_userData)
-{
-
-}
-
-void UserController::nextOutfit(KinectUser* g_userData)
-{
-
 }
 
 

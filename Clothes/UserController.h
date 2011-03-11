@@ -22,13 +22,22 @@ class UserController
 	float getDistance(XnVector3D&, XnVector3D&);
 	void getMidPoint(XnVector3D&, XnVector3D&, XnVector3D*);
 	void drawTexture(XnVector3D&, XnVector3D&, XnFloat);
-	void drawHelmet(XnVector3D&);
+	void drawHelmet(KinectUser*, XnVector3D&);
 
 public:
 	UserController(Kinect* k);
 	void drawUser(KinectUser*);
-	void nextHelmet(KinectUser*);
-	void nextOutfit(KinectUser*);
+	void nextHelmet(KinectUser* user)
+	{
+		if(++(user->helmet) >= HelmetList.size())
+			user->helmet = 0;
+	};
+	void nextOutfit(KinectUser* user)
+	{
+		if(++(user->outfit) >= OutfitList.size())
+			user->outfit = 0;
+	};
+
 };
 
 #endif
