@@ -109,6 +109,12 @@ float UserController::getDistance(XnVector3D& a, XnVector3D& b)
 	return dist;
 }
 
+float UserController::getDistance3D(XnVector3D& a, XnVector3D& b)
+{
+	float dist = sqrt(pow((a.X-b.X),2) + pow((a.Y-b.Y),2) + pow((a.Z-b.Z),2));	
+	return dist;
+}
+
 void UserController::getVectorBetween(XnVector3D& a, XnVector3D& b, XnVector3D* c)
 {
 	c->X = a.X-b.X;
