@@ -198,7 +198,7 @@ void UserController::drawTrackedUser(KinectUser* user)
 				{
 					getMidPoint(user->joints[XN_SKEL_RIGHT_SHOULDER-1].position,user->joints[XN_SKEL_LEFT_SHOULDER-1].position, &pt1);
 					getMidPoint(user->joints[XN_SKEL_RIGHT_HIP-1].position,user->joints[XN_SKEL_LEFT_HIP-1].position, &pt2);
-					draw = true;
+					drawTexture(pt1,pt2, w);
 					break;
 				}
 			case Outfit::OUTFIT_LEFT_UPPER_ARM:
