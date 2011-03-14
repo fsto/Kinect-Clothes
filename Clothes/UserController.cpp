@@ -178,7 +178,7 @@ void UserController::drawTrackedUser(KinectUser* user)
 		drawHelmet(user, user->joints[XN_SKEL_HEAD-1].position); //Rita huvud
 
 		Outfit *outfit = OutfitList[user->outfit];
-		XnVector3D pt1, pt2, s;
+		XnVector3D pt1, pt2;
 		XnFloat w;
 		for(int i=0; i<NUM_GARMENTS;++i)
 		{

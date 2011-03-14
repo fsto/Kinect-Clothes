@@ -2,6 +2,7 @@
 #define _tracker
 
 #include "skeletonjelly.hpp"
+#include <ctime>
 
 struct Coord
 {
@@ -11,7 +12,8 @@ struct Coord
 
 class Tracker
 {
-	Coord oldCoords[30];
+	time_t startedRight, startedLeft;
+	bool gotRight, gotLeft;
 	KinectUser *user;
 	void (*callback)(KinectUser*, int);
 public:

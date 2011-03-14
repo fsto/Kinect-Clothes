@@ -4,7 +4,6 @@
 #include "skeletonjelly.hpp"
 #include "KinectUser.h"
 #include "UserController.h"
-#include "GestureTracker.h"
 
 #define WINDOW_X 800
 #define WINDOW_Y 600
@@ -46,7 +45,7 @@ void convertToProjCoordinates(XnSkeletonJointPosition &joint)
 
 void kinect_status(Kinect *k, Kinect::CallbackType cb_type, XnUserID id, void *data)
 {
-	_snprintf(g_message, 64, "User [%d]: %s", id, MESSAGES[cb_type]);
+	_snprintf_s(g_message, 64, "User [%d]: %s", id, MESSAGES[cb_type]);
 
 	if (cb_type == Kinect::CB_NEW_USER && id == 1)
 	{
@@ -219,10 +218,19 @@ int main(int argc, char **argv)
 	g_kinect.setEventCallback(kinect_status, NULL);
 	g_kinect.setRenderFormat(Kinect::RENDER_RGBA);
 	g_kinect.setTicksPerSecond(30);
-	g_kinect.init(Kinect::SENSOR_VGA_30FPS, Kinect::SENSOR_VGA_30FPS);
+	XnStatus status = g_kinect.init(Kinect::SENSOR_VGA_30FPS, Kinect::SENSOR_VGA_30FPS);
+	
+	if(status != XN_STATUS_OK)
+	{
+		printf("Got an error while initiating, is the kinect connected?\nThe error message was \"%s\"\nContinue? (y/N)\n", xnGetStatusString(status));
+		char input = ' ';
+		scanf_s("%c", &input);
+		if(input != 'y')
+			return(1);
+	}
+
 
 	res = g_kinect.getDepthResolution();
-
 	glInit(&argc, argv);
 
 	int imageSize = g_kinect.getImageTexSize();//getDepthTexSize();
