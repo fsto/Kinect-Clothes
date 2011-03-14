@@ -3,10 +3,13 @@
 
 #include <XnCppWrapper.h>
 
+class Tracker;
+
 struct KinectUser
 {
-	int outfit;
-	int helmet;
+	unsigned int outfit;
+	unsigned int helmet;
+	Tracker *tracker;
 	int status;
 	XnSkeletonJointPosition joints[24];
 	XnPoint3D centerOfMass;

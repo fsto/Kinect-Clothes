@@ -1,4 +1,5 @@
 #include "skeletonjelly.hpp"
+#include "GestureTracker.h"
 
 static const char FORMAT_BPP[2] = {4, 3};
 
@@ -72,9 +73,9 @@ XnStatus Kinect::init(SensorMode depthMode, SensorMode imageMode)
 		{ 1280, 1024, 10 } /* SENSOR_SXGA */
 	};
 
-	xn::Query qDepth, qImage;
+	xn::Query qDepth, qImage, qGesture, qHands;
 	XnCallbackHandle cb_user, cb_calibration, cb_pose;
-
+	
 	if (depthMode == SENSOR_DISABLED)
 		return XN_STATUS_NOT_IMPLEMENTED;
 
@@ -132,14 +133,12 @@ XnStatus Kinect::init(SensorMode depthMode, SensorMode imageMode)
     
     		if (!_userGen.IsCapabilitySupported(XN_CAPABILITY_POSE_DETECTION))
     			return XN_STATUS_ERROR;
-    
     		_userGen.GetPoseDetectionCap().RegisterToPoseCallbacks(cb_poseDetected, NULL, this, cb_pose);
     		_userGen.GetSkeletonCap().GetCalibrationPose(_calibrationPose);
-    	}
-    
+    	}  
 		_userGen.GetSkeletonCap().SetSkeletonProfile(XN_SKEL_PROFILE_ALL);
 	}
-	
+
 	_error = _context.StartGeneratingAll();
 	CHECK_RC(_error);
 
@@ -152,7 +151,8 @@ void Kinect::tick(int elapsed)
 {
 	_elapsed += elapsed;
 	_context.WaitAndUpdateAll();
-	_userGen.WaitAndUpdateData();
+//	_userGen.WaitAndUpdateData();
+//	_depth.WaitAndUpdateData();
 
 	if (_elapsed >= _tickTime)
 	{
@@ -206,6 +206,8 @@ void Kinect::onNewUser(XnUserID id)
 	{
 		if (_userData[id] == 0)
     		_userData[id] = new KinectUser;
+
+		_userData[id]->tracker = new Tracker(_userData[id], NULL);
 
 		_userData[id]->status = USER_ACTIVE;
 
@@ -462,6 +464,8 @@ void Kinect::updateUserData(XnUserID id, KinectUser *data)
 
 	_userGen.GetCoM(id, data->centerOfMass);
 	_depth.ConvertRealWorldToProjective(1, &data->centerOfMass, &data->centerOfMass);
+
+	data->tracker->Tick();
 
 //	data->centerOfMass.X /= (float)resolution.X;
 //	data->centerOfMass.Y /= (float)resolution.Y;
