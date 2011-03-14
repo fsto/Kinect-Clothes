@@ -193,14 +193,12 @@ void UserController::drawTrackedUser(KinectUser* user)
 		{
 			outfit->getOutfitGarment(i)->bindTexture();
 			bool draw = false;
-			w = 30;
 			switch(i)
 			{
 			case Outfit::OUTFIT_TORSO:
 				{
 					getMidPoint(user->joints[XN_SKEL_RIGHT_SHOULDER-1].position,user->joints[XN_SKEL_LEFT_SHOULDER-1].position, &pt1);
 					getMidPoint(user->joints[XN_SKEL_RIGHT_HIP-1].position,user->joints[XN_SKEL_LEFT_HIP-1].position, &pt2);
-					w = 100;					
 					draw = true;
 					break;
 				}
@@ -208,62 +206,59 @@ void UserController::drawTrackedUser(KinectUser* user)
 				{
 					pt1 = user->joints[XN_SKEL_RIGHT_SHOULDER-1].position;
 					pt2 = user->joints[XN_SKEL_RIGHT_ELBOW-1].position;
-					draw = true;
+					drawTexture(pt1,pt2, w/3);
 					break;
 				}
 			case Outfit::OUTFIT_LEFT_UNDER_ARM:
 				{
 					pt1 = user->joints[XN_SKEL_RIGHT_ELBOW-1].position;
 					pt2 = user->joints[XN_SKEL_RIGHT_HAND-1].position;
-					draw = true;
+					drawTexture(pt1,pt2, w/3);
 					break;
 				}
 			case Outfit::OUTFIT_LEFT_UPPER_LEG:
 				{
 					pt1 = user->joints[XN_SKEL_RIGHT_HIP-1].position;
 					pt2 = user->joints[XN_SKEL_RIGHT_KNEE-1].position;
-					draw = true;
+					drawTexture(pt1,pt2, w/2);
 					break;
 				}
 			case Outfit::OUTFIT_LEFT_UNDER_LEG:
 				{
 					pt1 = user->joints[XN_SKEL_RIGHT_KNEE-1].position;
 					pt2 = user->joints[XN_SKEL_RIGHT_FOOT-1].position;
-					draw = true;
+					drawTexture(pt1,pt2, w/2);
 					break;
 				}
 			case Outfit::OUTFIT_RIGHT_UPPER_ARM:
 				{
 					pt1 = user->joints[XN_SKEL_LEFT_SHOULDER-1].position;
 					pt2 = user->joints[XN_SKEL_LEFT_ELBOW-1].position;
-					draw = true;
+					drawTexture(pt1,pt2, w/3);
 					break;
 				}
 			case Outfit::OUTFIT_RIGHT_UNDER_ARM:
 				{
 					pt1 = user->joints[XN_SKEL_LEFT_ELBOW-1].position;
 					pt2 = user->joints[XN_SKEL_LEFT_HAND-1].position;
-					draw = true;
+					drawTexture(pt1,pt2, w/3);
 					break;
 				}
 			case Outfit::OUTFIT_RIGHT_UPPER_LEG:
 				{
 					pt1 = user->joints[XN_SKEL_LEFT_HIP-1].position;
 					pt2 = user->joints[XN_SKEL_LEFT_KNEE-1].position;
-					draw = true;
+					drawTexture(pt1,pt2, w/2);
 					break;
 				}
 			case Outfit::OUTFIT_RIGHT_UNDER_LEG:
 				{
 					pt1 = user->joints[XN_SKEL_LEFT_KNEE-1].position;
 					pt2 = user->joints[XN_SKEL_LEFT_FOOT-1].position;
-					draw = true;
+					drawTexture(pt1,pt2, w/2);
 					break;
 				}
-
 			}
-			if(draw)
-				drawTexture(pt1,pt2, w);
 		}
 	}
 }
@@ -293,7 +288,7 @@ void UserController::drawNewUser(KinectUser* user)
 	XnFloat x = user->centerOfMass.X;
 	XnFloat y = user->centerOfMass.Y;
 	glPushMatrix();
-	//glTranslatef(0,-30,0);
+	glTranslatef(0,-30,0);
 
 	untracked->bindTexture();
 	glEnable(GL_TEXTURE_2D);
