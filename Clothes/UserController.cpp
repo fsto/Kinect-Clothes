@@ -25,6 +25,7 @@ UserController::UserController(Kinect* k)
 		sprintf(buffer, "skins/outfit-%d/helmet.png", i);
 		HelmetList.push_back(new Garment(buffer));
 	}
+	//playSound();
 }
 
 
@@ -289,8 +290,6 @@ void UserController::drawNewUser(KinectUser* user)
 	{
 		untracked = new Garment("skins/untracked.png");
 	}
-	if (!playingSound)
-		playSound();
 	XnFloat x = user->centerOfMass.X;
 	XnFloat y = user->centerOfMass.Y;
 	glPushMatrix();
