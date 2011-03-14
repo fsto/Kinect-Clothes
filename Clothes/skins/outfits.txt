@@ -1,2 +1,2 @@
-1  # Antal outfits
-1  # Antal hjälmar
+2  # Antal outfits
+2  # Antal hjälmar
