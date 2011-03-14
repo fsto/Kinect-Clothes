@@ -20,11 +20,14 @@ class UserController
 	float getAngle(XnVector3D&, XnVector3D&);
 	void getVectorBetween(XnVector3D&, XnVector3D&, XnVector3D*);
 	float getDistance(XnVector3D&, XnVector3D&);
+	float getDistance3D(XnVector3D&, XnVector3D&);
 	void getMidPoint(XnVector3D&, XnVector3D&, XnVector3D*);
 	void drawTexture(XnVector3D&, XnVector3D&, XnFloat);
 	void drawHelmet(KinectUser*, XnVector3D&);
+	void playSound();
 
 public:
+	bool playingSound;
 	UserController(Kinect* k);
 	void drawUser(KinectUser*);
 	void nextHelmet(KinectUser* user)
