@@ -188,7 +188,7 @@ void UserController::drawTrackedUser(KinectUser* user)
 
 		Outfit *outfit = OutfitList[user->outfit];
 		XnVector3D pt1, pt2;
-		XnFloat w;
+		XnFloat w = getDistance3D(user->joints[XN_SKEL_RIGHT_SHOULDER-1].position,user->joints[XN_SKEL_LEFT_SHOULDER-1].position);
 		for(int i=0; i<NUM_GARMENTS;++i)
 		{
 			outfit->getOutfitGarment(i)->bindTexture();
