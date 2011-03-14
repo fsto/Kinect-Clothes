@@ -24,8 +24,10 @@ class UserController
 	void getMidPoint(XnVector3D&, XnVector3D&, XnVector3D*);
 	void drawTexture(XnVector3D&, XnVector3D&, XnFloat);
 	void drawHelmet(KinectUser*, XnVector3D&);
+	void playSound();
 
 public:
+	bool playingSound;
 	UserController(Kinect* k);
 	void drawUser(KinectUser*);
 	void nextHelmet(KinectUser* user)

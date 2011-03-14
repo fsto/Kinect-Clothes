@@ -1,6 +1,8 @@
 #include "UserController.h"
 #include <fstream>
 #include <cmath>
+#include <windows.h>
+#include <mmsystem.h>
 
 UserController::UserController(Kinect* k) 
 : g_kinect(k)
@@ -287,6 +289,8 @@ void UserController::drawNewUser(KinectUser* user)
 	{
 		untracked = new Garment("skins/untracked.png");
 	}
+	if (!playingSound)
+		playSound();
 	XnFloat x = user->centerOfMass.X;
 	XnFloat y = user->centerOfMass.Y;
 	glPushMatrix();
@@ -325,6 +329,11 @@ void UserController::drawUser(KinectUser* g_userData)
 	}
 }
 
+void UserController::playSound()
+{
+	playingSound = !playingSound;
+	PlaySound("audio/1.wav", NULL, SND_FILENAME | SND_ASYNC);
+}
 
 /*
 void drawTracking()
