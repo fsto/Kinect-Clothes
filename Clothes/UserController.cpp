@@ -47,29 +47,6 @@ void UserController::drawJoint(XnSkeletonJointPosition& joint)
 	glEnd();
 }
 
-void UserController::drawHelmet(KinectUser *user, XnVector3D& pt)
-{
-	glColor3f(1,1,1);
-	XnFloat x = pt.X;
-	XnFloat y = pt.Y;
-	glPushMatrix();
-
-	glTranslatef(x,y,0);
-
-	HelmetList[user->helmet]->bindTexture();
-	glBegin(GL_QUADS);
-	glTexCoord2f(0,1);
-	glVertex2f(-100,-60);
-	glTexCoord2f(0,0);
-	glVertex2f(-100,60);
-	glTexCoord2f(1,0);
-	glVertex2f(100,60);
-	glTexCoord2f(1,1);
-	glVertex2f(100,-60);
-	glEnd();
-
-	glPopMatrix();
-}
 
 #define PI 3.1415
 
@@ -161,6 +138,40 @@ void UserController::drawTexture(XnVector3D& pt1, XnVector3D& pt2, XnFloat w)
 	glPopMatrix();
 
 }
+void UserController::drawHelmet(KinectUser *user)
+{
+	glColor3f(1,1,1);
+	XnVector3D m = user->joints[XN_SKEL_HEAD-1].position;
+	XnVector3D pt1 = user->joints[XN_SKEL_NECK-1].position;
+	XnVector3D pt2;
+	pt2.X = 2 * m.X - pt1.X;
+	pt2.Y = 2 * m.Y - pt1.Y;
+
+	HelmetList[user->helmet]->bindTexture();
+
+	drawTexture(pt2,pt1, user->scale/3); //Ändra W
+
+/*
+	XnFloat x = pt.X;
+	XnFloat y = pt.Y;
+	glPushMatrix();
+
+	glTranslatef(x,y,0);
+
+
+	glBegin(GL_QUADS);
+	glTexCoord2f(0,1);
+	glVertex2f(-100,-60);
+	glTexCoord2f(0,0);
+	glVertex2f(-100,60);
+	glTexCoord2f(1,0);
+	glVertex2f(100,60);
+	glTexCoord2f(1,1);
+	glVertex2f(100,-60);
+	glEnd();
+
+	glPopMatrix();*/
+}
 
 void UserController::drawTrackedUser(KinectUser* user)
 {
@@ -169,6 +180,9 @@ void UserController::drawTrackedUser(KinectUser* user)
 
 	if (user)
 	{
+
+		if(user->joints[XN_SKEL_TORSO-1].fConfidence < .3)
+			return;
 
  		XnSkeletonJointPosition joint;
 
@@ -180,13 +194,18 @@ void UserController::drawTrackedUser(KinectUser* user)
 			convertToProjCoordinates(user->joints[i]);
 		}
 
+		if(!user->scale)
+			calibrateUser(user);
+		if(!user->scale)
+			return;
+
 		glEnable(GL_TEXTURE_2D);
 
-		drawHelmet(user, user->joints[XN_SKEL_HEAD-1].position); //Rita huvud
+		drawHelmet(user); //Rita huvud
 
 		Outfit *outfit = OutfitList[user->outfit];
 		XnVector3D pt1, pt2;
-		XnFloat w = 100;//getDistance3D(user->joints[XN_SKEL_RIGHT_SHOULDER-1].position,user->joints[XN_SKEL_LEFT_SHOULDER-1].position);
+		XnFloat w = user->scale/3;//getDistance3D(user->joints[XN_SKEL_RIGHT_SHOULDER-1].position,user->joints[XN_SKEL_LEFT_SHOULDER-1].position);
 
 		int firstUpperLeg	= user->joints[XN_SKEL_RIGHT_KNEE-1].position.Z 
 							< user->joints[XN_SKEL_LEFT_KNEE-1].position.Z
@@ -344,6 +363,28 @@ void UserController::playSound()
 {
 	PlaySound("audio/1.wav", NULL, SND_FILENAME | SND_ASYNC);
 }
+
+void UserController::calibrateUser(KinectUser *user)
+{
+	float rElbowC = user->joints[XN_SKEL_RIGHT_ELBOW - 1].fConfidence;
+	float lElbowC = user->joints[XN_SKEL_LEFT_ELBOW - 1].fConfidence;
+	float rShoulderC = user->joints[XN_SKEL_RIGHT_SHOULDER - 1].fConfidence;
+	float lShoulderC = user->joints[XN_SKEL_LEFT_SHOULDER - 1].fConfidence;
+
+	if(lElbowC > CONF_LIMIT && rElbowC > CONF_LIMIT && lShoulderC > CONF_LIMIT && rShoulderC > CONF_LIMIT)
+	{
+		XnVector3D rElbow = user->joints[XN_SKEL_RIGHT_ELBOW - 1].position;
+		XnVector3D lElbow = user->joints[XN_SKEL_LEFT_ELBOW - 1].position;
+		XnVector3D rShoulder = user->joints[XN_SKEL_RIGHT_SHOULDER - 1].position;
+		XnVector3D lShoulder = user->joints[XN_SKEL_LEFT_SHOULDER - 1].position;
+
+		user->scale = getDistance(rElbow, rShoulder);
+		user->scale += getDistance(lShoulder, rShoulder);
+		user->scale += getDistance(lElbow, lShoulder);
+		printf("User scale: %f\n", user->scale);
+	}
+}
+
 
 /*
 void drawTracking()

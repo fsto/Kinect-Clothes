@@ -9,6 +9,8 @@
 #include "GestureTracker.h"
 #include <vector>
 
+#define CONF_LIMIT .95
+
 class UserController
 {
 	Kinect* g_kinect;
@@ -24,7 +26,7 @@ class UserController
 	float getDistance3D(XnVector3D&, XnVector3D&);
 	void getMidPoint(XnVector3D&, XnVector3D&, XnVector3D*);
 	void drawTexture(XnVector3D&, XnVector3D&, XnFloat);
-	void drawHelmet(KinectUser*, XnVector3D&);
+	void drawHelmet(KinectUser*);
 	void playSound();
 
 public:
@@ -43,7 +45,7 @@ public:
 				user->outfit = 0;
 		}
 	};
-
+	void calibrateUser(KinectUser *);
 };
 
 #endif

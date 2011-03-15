@@ -22,7 +22,7 @@ char g_rightHand[64] = {0};
 
 XnUInt32XYPair res;
 
-bool drawImage = true;
+bool drawImage, drawBg = true;
 
 UserController *uc;
 
@@ -158,7 +158,8 @@ void glutDisplay()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glOrtho(0, res.X, res.Y, 0, -1.0, 1.0);
-	drawBackground();
+	if(drawBg)
+		drawBackground();
 
 	glDisable(GL_TEXTURE_2D);
 
@@ -190,6 +191,9 @@ void glutKeyboard (unsigned char key, int x, int y)
 		break;
 	case ' ':
 		drawImage = !drawImage;
+		break;
+	case 'b':
+		drawBg = !drawBg;
 		break;
 	}
 }
