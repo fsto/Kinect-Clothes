@@ -22,7 +22,7 @@ char g_rightHand[64] = {0};
 
 XnUInt32XYPair res;
 
-bool drawImage, drawBg = true;
+bool drawImage = true, drawBg = true;
 
 UserController *uc;
 
@@ -179,7 +179,6 @@ void glutIdle()
 	glutPostRedisplay();
 
 	time = now;
-
 }
 
 void glutKeyboard (unsigned char key, int x, int y)

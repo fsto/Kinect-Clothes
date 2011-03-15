@@ -228,9 +228,9 @@ void UserController::drawTrackedUser(KinectUser* user)
 				||	i == Outfit::OUTFIT_LEFT_UNDER_LEG
 				||	i == Outfit::OUTFIT_RIGHT_UNDER_LEG){
 				garmentOrder[i] = firstUpperLeg;
-				garmentOrder[i++] = firstUnderLeg;
-				garmentOrder[i++] = secondUpperLeg;
-				garmentOrder[i++] = secondUnderLeg;
+				garmentOrder[++i] = firstUnderLeg;
+				garmentOrder[++i] = secondUpperLeg;
+				garmentOrder[++i] = secondUnderLeg;
 			}
 			else{
 				garmentOrder[i] = i;
