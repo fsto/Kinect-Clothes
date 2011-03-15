@@ -144,10 +144,12 @@ void UserController::drawHelmet(KinectUser *user)
 	XnVector3D m = user->joints[XN_SKEL_HEAD-1].position;
 	XnVector3D pt1 = user->joints[XN_SKEL_NECK-1].position;
 	XnVector3D pt2;
-	pt2.X = 2 * m.X + pt1.X;
-	pt2.Y = 2 * m.Y + pt1.Y;
+	pt2.X = 2 * m.X - pt1.X;
+	pt2.Y = 2 * m.Y - pt1.Y;
 
-	drawTexture(pt1,pt2, 100); //Ändra W
+	HelmetList[user->helmet]->bindTexture();
+
+	drawTexture(pt2,pt1, 100); //Ändra W
 
 /*
 	XnFloat x = pt.X;
@@ -156,7 +158,7 @@ void UserController::drawHelmet(KinectUser *user)
 
 	glTranslatef(x,y,0);
 
-	HelmetList[user->helmet]->bindTexture();
+
 	glBegin(GL_QUADS);
 	glTexCoord2f(0,1);
 	glVertex2f(-100,-60);
@@ -188,6 +190,11 @@ void UserController::drawTrackedUser(KinectUser* user)
 
 			convertToProjCoordinates(user->joints[i]);
 		}
+
+		if(!user->scale)
+			calibrateUser(user);
+		if(!user->scale)
+			return;
 
 		glEnable(GL_TEXTURE_2D);
 
@@ -322,6 +329,28 @@ void UserController::playSound()
 {
 	PlaySound("audio/1.wav", NULL, SND_FILENAME | SND_ASYNC);
 }
+
+void UserController::calibrateUser(KinectUser *user)
+{
+	float rElbowC = user->joints[XN_SKEL_RIGHT_ELBOW - 1].fConfidence;
+	float lElbowC = user->joints[XN_SKEL_LEFT_ELBOW - 1].fConfidence;
+	float rShoulderC = user->joints[XN_SKEL_RIGHT_SHOULDER - 1].fConfidence;
+	float lShoulderC = user->joints[XN_SKEL_LEFT_SHOULDER - 1].fConfidence;
+
+	if(lElbowC > CONF_LIMIT && rElbowC > CONF_LIMIT && lShoulderC > CONF_LIMIT && rShoulderC > CONF_LIMIT)
+	{
+		XnVector3D rElbow = user->joints[XN_SKEL_RIGHT_ELBOW - 1].position;
+		XnVector3D lElbow = user->joints[XN_SKEL_LEFT_ELBOW - 1].position;
+		XnVector3D rShoulder = user->joints[XN_SKEL_RIGHT_SHOULDER - 1].position;
+		XnVector3D lShoulder = user->joints[XN_SKEL_LEFT_SHOULDER - 1].position;
+
+		user->scale = getDistance(rElbow, rShoulder);
+		user->scale += getDistance(lShoulder, rShoulder);
+		user->scale += getDistance(lElbow, lShoulder);
+		printf("User scale: %f\n", user->scale);
+	}
+}
+
 
 /*
 void drawTracking()

@@ -9,6 +9,8 @@
 #include "GestureTracker.h"
 #include <vector>
 
+#define CONF_LIMIT .95
+
 class UserController
 {
 	Kinect* g_kinect;
@@ -43,7 +45,7 @@ public:
 				user->outfit = 0;
 		}
 	};
-
+	void calibrateUser(KinectUser *);
 };
 
 #endif
