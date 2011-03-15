@@ -22,7 +22,7 @@ UserController::UserController(Kinect* k)
 	for(int i=1; i<=countHelmets; ++i)
 	{
 		char buffer[100];
-		sprintf(buffer, "skins/outfit-%d/helmet.png", i);
+		sprintf(buffer, "skins/helmets/%d.png", i);
 		HelmetList.push_back(new Garment(buffer));
 	}
 	//playSound();
@@ -134,23 +134,24 @@ void UserController::drawTexture(XnVector3D& pt1, XnVector3D& pt2, XnFloat w)
 
 	XnVector3D m;
 	XnFloat l = getDistance(pt1, pt2)*0.7;
+	XnFloat angle = getAngle(pt1,pt2);
+
 	//XnFloat w = ((l / s.X) * s.Y)/2;
 	m.X = (pt1.X + pt2.X)/2;
 	m.Y = (pt1.Y + pt2.Y)/2;
 
-	glColor3f(.9f, .5f, .8f);	
-	glBegin(GL_POINTS);
-		glVertex3f(m.X, m.Y, .1f);
-	glEnd();
+//	glColor3f(.9f, .5f, .8f);	
+//	glBegin(GL_POINTS);
+//		glVertex3f(m.X, m.Y, .1f);
+//	glEnd();
 	
-	glDisable(GL_COLOR_MATERIAL);
 	glColor3f(1,1,1);
+
 	glPushMatrix();
 	glTranslatef(m.X,m.Y,0);
-	XnFloat angle = getAngle(pt1,pt2);
 	glRotatef(-angle*180/PI,0,0,1);
-	glEnable(GL_TEXTURE_2D);
 	glBegin(GL_QUADS);
+
 	glTexCoord2f(1,1);
 	glVertex2f(l,w);
 	glTexCoord2f(0,1);
@@ -159,10 +160,9 @@ void UserController::drawTexture(XnVector3D& pt1, XnVector3D& pt2, XnFloat w)
 	glVertex2f(-l,-w);
 	glTexCoord2f(1,0);
 	glVertex2f(-l,w);
+
 	glEnd();
 	glPopMatrix();
-
-	glDisable(GL_TEXTURE_2D);
 
 }
 
@@ -188,7 +188,10 @@ void UserController::drawTrackedUser(KinectUser* user)
 
 		Outfit *outfit = OutfitList[user->outfit];
 		XnVector3D pt1, pt2;
-		XnFloat w = getDistance3D(user->joints[XN_SKEL_RIGHT_SHOULDER-1].position,user->joints[XN_SKEL_LEFT_SHOULDER-1].position);
+		XnFloat w = 100;//getDistance3D(user->joints[XN_SKEL_RIGHT_SHOULDER-1].position,user->joints[XN_SKEL_LEFT_SHOULDER-1].position);
+
+		glEnable(GL_TEXTURE_2D);
+		//glBegin(GL_QUADS);
 		for(int i=0; i<NUM_GARMENTS;++i)
 		{
 			outfit->getOutfitGarment(i)->bindTexture();
@@ -260,6 +263,8 @@ void UserController::drawTrackedUser(KinectUser* user)
 				}
 			}
 		}
+		//glEnd();
+		glDisable(GL_TEXTURE_2D);
 	}
 }
 

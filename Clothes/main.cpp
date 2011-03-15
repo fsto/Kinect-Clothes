@@ -1,3 +1,5 @@
+#include <vld.h>
+
 #include <list>
 #include "GL/glut.h"
 #include "GL/gl.h"
@@ -174,6 +176,7 @@ void glutIdle()
 	glutPostRedisplay();
 
 	time = now;
+
 }
 
 void glutKeyboard (unsigned char key, int x, int y)
@@ -194,7 +197,7 @@ void glInit (int *pargc, char **argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInitWindowSize(res.X, res.Y);
 	glutCreateWindow ("Clothes");
-	glutFullScreen();
+	//glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
 
 	glutKeyboardFunc(glutKeyboard);
@@ -213,6 +216,11 @@ void glInit (int *pargc, char **argv)
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
+void updateOutfitForUser(KinectUser *user, int type)
+{
+	uc->nextOutfit(user, type);
+}
+
 int main(int argc, char **argv)
 {
 	g_kinect.setEventCallback(kinect_status, NULL);
@@ -229,8 +237,8 @@ int main(int argc, char **argv)
 			return(1);
 	}
 
-
 	res = g_kinect.getDepthResolution();
+
 	glInit(&argc, argv);
 
 	int imageSize = g_kinect.getImageTexSize();//getDepthTexSize();
@@ -238,7 +246,9 @@ int main(int argc, char **argv)
 	imageBuffer = new unsigned char[imageSize];
 
 	Garment::InitializeLibs();
+
 	uc = new UserController(&g_kinect);
+	g_kinect.trackerCallback = &updateOutfitForUser;
 
 	glutMainLoop();
 }

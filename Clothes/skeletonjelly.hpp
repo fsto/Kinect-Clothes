@@ -18,6 +18,8 @@ class Kinect
 {
 
 public:
+	void (*trackerCallback)(KinectUser*, int);
+
 	static const int KINECT_JOINT_MAX=24;
 
 	int getMaxUsers(){return MAX_USERS;}

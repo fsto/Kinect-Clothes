@@ -6,6 +6,7 @@
 #include "skeletonjelly.hpp"
 #include "Garment.h"
 #include "Outfit.h"
+#include "GestureTracker.h"
 #include <vector>
 
 class UserController
@@ -30,15 +31,18 @@ public:
 	bool playingSound;
 	UserController(Kinect* k);
 	void drawUser(KinectUser*);
-	void nextHelmet(KinectUser* user)
+	void nextOutfit(KinectUser* user, int type)
 	{
-		if(++(user->helmet) >= HelmetList.size())
-			user->helmet = 0;
-	};
-	void nextOutfit(KinectUser* user)
-	{
-		if(++(user->outfit) >= OutfitList.size())
-			user->outfit = 0;
+		if(type == TRACKER_TYPE_HELMET)
+		{
+			if(++(user->helmet) >= HelmetList.size())
+				user->helmet = 0;
+		}
+		if(type == TRACKER_TYPE_OUTFIT)
+		{
+			if(++(user->outfit) >= OutfitList.size())
+				user->outfit = 0;
+		}
 	};
 
 };

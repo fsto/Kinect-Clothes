@@ -34,6 +34,7 @@ void XN_CALLBACK_TYPE cb_calibrationEnd(xn::SkeletonCapability& capability, XnUs
 }
 
 Kinect::Kinect()
+	: trackerCallback(0)
 {
 	_needPose = false;
 	_error = XN_STATUS_OK;
@@ -151,8 +152,8 @@ void Kinect::tick(int elapsed)
 {
 	_elapsed += elapsed;
 	_context.WaitAndUpdateAll();
-//	_userGen.WaitAndUpdateData();
-//	_depth.WaitAndUpdateData();
+	//_userGen.WaitAndUpdateData();
+	//_depth.WaitAndUpdateData();
 
 	if (_elapsed >= _tickTime)
 	{
@@ -207,7 +208,7 @@ void Kinect::onNewUser(XnUserID id)
 		if (_userData[id] == 0)
     		_userData[id] = new KinectUser;
 
-		_userData[id]->tracker = new Tracker(_userData[id], NULL);
+		_userData[id]->tracker = new Tracker(_userData[id], trackerCallback);
 
 		_userData[id]->status = USER_ACTIVE;
 
@@ -460,12 +461,13 @@ void Kinect::updateUserData(XnUserID id, KinectUser *data)
 	{
 		for (int i = 0; i < KINECT_JOINT_MAX; ++i) 
 			_userGen.GetSkeletonCap().GetSkeletonJointPosition(id, jointTranslation[i], data->joints[i]);
+		
+		//uppdatera gesture-tracker
+		data->tracker->Tick();
 	}
 
 	_userGen.GetCoM(id, data->centerOfMass);
 	_depth.ConvertRealWorldToProjective(1, &data->centerOfMass, &data->centerOfMass);
-
-	data->tracker->Tick();
 
 //	data->centerOfMass.X /= (float)resolution.X;
 //	data->centerOfMass.Y /= (float)resolution.Y;

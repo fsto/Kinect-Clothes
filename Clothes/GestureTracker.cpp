@@ -1,5 +1,7 @@
 #include "GestureTracker.h"
 
+#define WAIT_TIME 2
+
 void Tracker::Tick()
 {
 	XnVector3D head = user->joints[XN_SKEL_HEAD-1].position;
@@ -8,13 +10,15 @@ void Tracker::Tick()
 
 	if(right.Y > head.Y)
 	{
-		printf("Right up\n");
 		//Vill byta outfit
 		if(gotRight)
 		{
-			if(difftime(time(NULL) > 1, startedRight))
+			if(difftime(time(NULL), startedRight) > WAIT_TIME)
 			{
-				printf("Change outfit!\n");
+				if(callback)
+					(callback)(user, TRACKER_TYPE_OUTFIT);
+				else
+					printf("No tracker callback!\n");
 				gotRight = false;
 			}
 		}
@@ -24,14 +28,18 @@ void Tracker::Tick()
 			startedRight = time(NULL);
 		}
 	}
+	else
+		gotRight = false;
 	if(left.Y > head.Y)
 	{
-		printf("Left up\n");
 		if(gotLeft)
 		{
-			if(difftime(time(NULL) > 1, startedLeft))
+			if(difftime(time(NULL), startedLeft) > WAIT_TIME)
 			{
-				printf("Change!\n");
+				if(callback)
+					(callback)(user, TRACKER_TYPE_HELMET);
+				else
+					printf("No tracker callback!\n");
 				gotLeft = false;
 			}
 		}
@@ -41,4 +49,7 @@ void Tracker::Tick()
 			startedLeft = time(NULL);
 		}
 	}
+	else
+		gotLeft = false;
+
 }

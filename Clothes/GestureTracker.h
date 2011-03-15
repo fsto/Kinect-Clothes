@@ -10,6 +10,12 @@ struct Coord
 	XnFloat Y;
 };
 
+enum TRACKER_TYPE
+{
+	TRACKER_TYPE_OUTFIT,
+	TRACKER_TYPE_HELMET
+};
+
 class Tracker
 {
 	time_t startedRight, startedLeft;
