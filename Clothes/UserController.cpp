@@ -149,7 +149,7 @@ void UserController::drawHelmet(KinectUser *user)
 
 	HelmetList[user->helmet]->bindTexture();
 
-	drawTexture(pt2,pt1, 100); //Ändra W
+	drawTexture(pt2,pt1, user->scale/3); //Ändra W
 
 /*
 	XnFloat x = pt.X;
@@ -181,6 +181,9 @@ void UserController::drawTrackedUser(KinectUser* user)
 	if (user)
 	{
 
+		if(user->joints[XN_SKEL_TORSO-1].fConfidence < .3)
+			return;
+
  		XnSkeletonJointPosition joint;
 
 		for(int i=0;i<Kinect::KINECT_JOINT_MAX;++i)
@@ -202,7 +205,7 @@ void UserController::drawTrackedUser(KinectUser* user)
 
 		Outfit *outfit = OutfitList[user->outfit];
 		XnVector3D pt1, pt2;
-		XnFloat w = 100;//getDistance3D(user->joints[XN_SKEL_RIGHT_SHOULDER-1].position,user->joints[XN_SKEL_LEFT_SHOULDER-1].position);
+		XnFloat w = user->scale/3;//getDistance3D(user->joints[XN_SKEL_RIGHT_SHOULDER-1].position,user->joints[XN_SKEL_LEFT_SHOULDER-1].position);
 
 		for(int i=0; i<NUM_GARMENTS;++i)
 		{
