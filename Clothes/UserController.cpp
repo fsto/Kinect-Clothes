@@ -188,11 +188,42 @@ void UserController::drawTrackedUser(KinectUser* user)
 		XnVector3D pt1, pt2;
 		XnFloat w = 100;//getDistance3D(user->joints[XN_SKEL_RIGHT_SHOULDER-1].position,user->joints[XN_SKEL_LEFT_SHOULDER-1].position);
 
+		int firstUpperLeg	= user->joints[XN_SKEL_RIGHT_KNEE-1].position.Z 
+							< user->joints[XN_SKEL_LEFT_KNEE-1].position.Z
+							? Outfit::OUTFIT_RIGHT_UPPER_LEG
+							: Outfit::OUTFIT_LEFT_UPPER_LEG;
+		int secondUpperLeg	= firstUpperLeg == Outfit::OUTFIT_RIGHT_UPPER_LEG
+							? Outfit::OUTFIT_LEFT_UPPER_LEG
+							: Outfit::OUTFIT_RIGHT_UPPER_LEG;
+		int firstUnderLeg	= firstUpperLeg == Outfit::OUTFIT_RIGHT_UPPER_LEG
+							? Outfit::OUTFIT_RIGHT_UNDER_LEG
+							: Outfit::OUTFIT_LEFT_UNDER_LEG;
+		int secondUnderLeg	= firstUpperLeg == Outfit::OUTFIT_RIGHT_UPPER_LEG
+							? Outfit::OUTFIT_LEFT_UNDER_LEG
+							: Outfit::OUTFIT_RIGHT_UNDER_LEG;
+		int garmentOrder[NUM_GARMENTS];
+
+		for(int i = 0; i < NUM_GARMENTS; i++){
+			if (	i == Outfit::OUTFIT_LEFT_UPPER_LEG
+				||	i == Outfit::OUTFIT_RIGHT_UPPER_LEG
+				||	i == Outfit::OUTFIT_LEFT_UNDER_LEG
+				||	i == Outfit::OUTFIT_RIGHT_UNDER_LEG){
+				garmentOrder[i] = firstUpperLeg;
+				garmentOrder[i++] = firstUnderLeg;
+				garmentOrder[i++] = secondUpperLeg;
+				garmentOrder[i++] = secondUnderLeg;
+			}
+			else{
+				garmentOrder[i] = i;
+			}
+		}
+
 		for(int i=0; i<NUM_GARMENTS;++i)
 		{
-			outfit->getOutfitGarment(i)->bindTexture();
+			int orderedi = garmentOrder[i];
+			outfit->getOutfitGarment(orderedi)->bindTexture();
 			bool draw = false;
-			switch(i)
+			switch(orderedi)
 			{
 			case Outfit::OUTFIT_TORSO:
 				{

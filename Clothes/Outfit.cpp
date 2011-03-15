@@ -2,15 +2,15 @@
 
 Outfit::Outfit(char* id)
 {
-	const char *parts[NUM_GARMENTS] = {		"right-upper-leg",
-											"left-upper-leg",
-											"right-under-leg",
-											"left-under-leg",
-											"right-upper-arm",
-											"left-upper-arm",
-											"torso",
-											"right-under-arm",
-											"left-under-arm"
+	const char *parts[NUM_GARMENTS] = {	"right-upper-leg",
+										"left-upper-leg",
+										"right-under-leg",
+										"left-under-leg",
+										"right-upper-arm",
+										"left-upper-arm",
+										"torso",
+										"right-under-arm",
+										"left-under-arm"
 	};
 	for(int i = 0; i < NUM_GARMENTS; i++){
 		char path[64];
@@ -23,3 +23,4 @@ Outfit::Outfit(char* id)
 		garments[i] = new Garment(path);
 	}
 }
+
