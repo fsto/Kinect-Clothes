@@ -27,7 +27,33 @@ UserController::UserController(Kinect* k)
 	}
 }
 
+void UserController::nextOutfit(KinectUser* user, int type)
+	{
+		/*
+		2
+		4
+		11
+		12
+		20
+		*/
 
+		int sounds[5] = {2,4,11,12,20};
+		int idx = rand()%5;
+
+		player->playSound(idx);
+
+		if(type == TRACKER_TYPE_HELMET)
+		{
+			if(++(user->helmet) >= HelmetList.size())
+				user->helmet = 0;
+		}
+		if(type == TRACKER_TYPE_OUTFIT)
+		{
+			if(++(user->outfit) >= OutfitList.size())
+				user->outfit = 0;
+		}
+	};
+	
 
 void UserController::convertToProjCoordinates(XnSkeletonJointPosition &joint)
 {

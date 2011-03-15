@@ -33,19 +33,7 @@ class UserController
 public:
 	UserController(Kinect* k);
 	void drawUser(KinectUser*);
-	void nextOutfit(KinectUser* user, int type)
-	{
-		if(type == TRACKER_TYPE_HELMET)
-		{
-			if(++(user->helmet) >= HelmetList.size())
-				user->helmet = 0;
-		}
-		if(type == TRACKER_TYPE_OUTFIT)
-		{
-			if(++(user->outfit) >= OutfitList.size())
-				user->outfit = 0;
-		}
-	};
+	void nextOutfit(KinectUser* user, int type);
 	void calibrateUser(KinectUser *);
 };
 

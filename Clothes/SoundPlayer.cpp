@@ -12,7 +12,6 @@ void SoundPlayer::playSound(unsigned int idx)
 			PlaySound(sounds[idx]->id, NULL, SND_FILENAME | SND_ASYNC);
 			nextPlayback = time(NULL) + sounds[idx]->length;
 			printf("Playing \"%s\"\n", sounds[idx]->id);
-			printf("Next playback at %d\n", nextPlayback);
 		}
 		else
 		{
@@ -36,9 +35,8 @@ SoundPlayer::SoundPlayer(char *path)
 		SoundObject *o = new SoundObject();
 		unsigned int length;
 		file >> length;
-		o->length = length;
+		o->length = length+1;
 		_snprintf_s(o->id, SOUNDOBJECT_ID_SIZE, "audio/%d.wav", i+1);
 		sounds.push_back(o);
-		printf("Length %d - %d\n", o->length, length);
 	}
 }

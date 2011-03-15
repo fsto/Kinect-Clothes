@@ -20,6 +20,7 @@ class SoundPlayer
 public:
 	SoundPlayer(char *path);
 	void playSound(unsigned int);
+	int count(){return sounds.size();}
 };
 
 #endif
