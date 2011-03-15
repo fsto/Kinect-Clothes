@@ -47,29 +47,6 @@ void UserController::drawJoint(XnSkeletonJointPosition& joint)
 	glEnd();
 }
 
-void UserController::drawHelmet(KinectUser *user, XnVector3D& pt)
-{
-	glColor3f(1,1,1);
-	XnFloat x = pt.X;
-	XnFloat y = pt.Y;
-	glPushMatrix();
-
-	glTranslatef(x,y,0);
-
-	HelmetList[user->helmet]->bindTexture();
-	glBegin(GL_QUADS);
-	glTexCoord2f(0,1);
-	glVertex2f(-100,-60);
-	glTexCoord2f(0,0);
-	glVertex2f(-100,60);
-	glTexCoord2f(1,0);
-	glVertex2f(100,60);
-	glTexCoord2f(1,1);
-	glVertex2f(100,-60);
-	glEnd();
-
-	glPopMatrix();
-}
 
 #define PI 3.1415
 
@@ -161,6 +138,38 @@ void UserController::drawTexture(XnVector3D& pt1, XnVector3D& pt2, XnFloat w)
 	glPopMatrix();
 
 }
+void UserController::drawHelmet(KinectUser *user)
+{
+	glColor3f(1,1,1);
+	XnVector3D m = user->joints[XN_SKEL_HEAD-1].position;
+	XnVector3D pt1 = user->joints[XN_SKEL_NECK-1].position;
+	XnVector3D pt2;
+	pt2.X = 2 * m.X + pt1.X;
+	pt2.Y = 2 * m.Y + pt1.Y;
+
+	drawTexture(pt1,pt2, 100); //Ändra W
+
+/*
+	XnFloat x = pt.X;
+	XnFloat y = pt.Y;
+	glPushMatrix();
+
+	glTranslatef(x,y,0);
+
+	HelmetList[user->helmet]->bindTexture();
+	glBegin(GL_QUADS);
+	glTexCoord2f(0,1);
+	glVertex2f(-100,-60);
+	glTexCoord2f(0,0);
+	glVertex2f(-100,60);
+	glTexCoord2f(1,0);
+	glVertex2f(100,60);
+	glTexCoord2f(1,1);
+	glVertex2f(100,-60);
+	glEnd();
+
+	glPopMatrix();*/
+}
 
 void UserController::drawTrackedUser(KinectUser* user)
 {
@@ -182,7 +191,7 @@ void UserController::drawTrackedUser(KinectUser* user)
 
 		glEnable(GL_TEXTURE_2D);
 
-		drawHelmet(user, user->joints[XN_SKEL_HEAD-1].position); //Rita huvud
+		drawHelmet(user); //Rita huvud
 
 		Outfit *outfit = OutfitList[user->outfit];
 		XnVector3D pt1, pt2;
