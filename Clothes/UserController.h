@@ -8,6 +8,7 @@
 #include "Outfit.h"
 #include "GestureTracker.h"
 #include <vector>
+#include "SoundPlayer.h"
 
 #define CONF_LIMIT .95
 
@@ -16,6 +17,7 @@ class UserController
 	Kinect* g_kinect;
 	std::vector<Garment*> HelmetList;
 	std::vector<Outfit*> OutfitList;
+	SoundPlayer* player;
 	void convertToProjCoordinates(XnSkeletonJointPosition &joint);
 	void drawJoint(XnSkeletonJointPosition&);
 	void drawTrackedUser(KinectUser*);
@@ -27,7 +29,6 @@ class UserController
 	void getMidPoint(XnVector3D&, XnVector3D&, XnVector3D*);
 	void drawTexture(XnVector3D&, XnVector3D&, XnFloat);
 	void drawHelmet(KinectUser*);
-	void playSound();
 
 public:
 	UserController(Kinect* k);

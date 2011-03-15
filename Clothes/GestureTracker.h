@@ -23,7 +23,7 @@ class Tracker
 	KinectUser *user;
 	void (*callback)(KinectUser*, int);
 public:
-	Tracker(KinectUser *_user, void (*_callback)(KinectUser*, int)) : user(_user), callback(_callback){};
+	Tracker(KinectUser *_user, void (*_callback)(KinectUser*, int)) : user(_user), callback(_callback), gotRight(0), gotLeft(0){};
 	void Tick();
 };
 

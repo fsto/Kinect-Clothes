@@ -1,12 +1,12 @@
 #include "UserController.h"
 #include <fstream>
 #include <cmath>
-#include <windows.h>
-#include <mmsystem.h>
+#include "SoundPlayer.h"
 
 UserController::UserController(Kinect* k) 
 : g_kinect(k)
 {
+	player = new SoundPlayer("audio/sounds.txt");
 	std::fstream f("skins/outfits.txt");
 	int countOutfits, countHelmets;
 	f >> countOutfits;
@@ -25,7 +25,6 @@ UserController::UserController(Kinect* k)
 		sprintf(buffer, "skins/helmets/%d.png", i);
 		HelmetList.push_back(new Garment(buffer));
 	}
-	//playSound();
 }
 
 
@@ -38,8 +37,6 @@ void UserController::convertToProjCoordinates(XnSkeletonJointPosition &joint)
 
 void UserController::drawJoint(XnSkeletonJointPosition& joint)
 {
-	convertToProjCoordinates(joint);
-
 	glColor3f(.4f, .5f, .8f);
 			
 	glBegin(GL_POINTS);
@@ -189,9 +186,9 @@ void UserController::drawTrackedUser(KinectUser* user)
 		for(int i=0;i<Kinect::KINECT_JOINT_MAX;++i)
 		{
 			joint = user->joints[i];
-			drawJoint(joint);
-
 			convertToProjCoordinates(user->joints[i]);
+
+			//drawJoint(joint);
 		}
 
 		if(!user->scale)
@@ -255,7 +252,7 @@ void UserController::drawTrackedUser(KinectUser* user)
 				{
 					pt1 = user->joints[XN_SKEL_RIGHT_SHOULDER-1].position;
 					pt2 = user->joints[XN_SKEL_RIGHT_ELBOW-1].position;
-					drawTexture(pt1,pt2, w/3);
+					drawTexture(pt1,pt2, w/2);
 					break;
 				}
 			case Outfit::OUTFIT_LEFT_UNDER_ARM:
@@ -276,6 +273,13 @@ void UserController::drawTrackedUser(KinectUser* user)
 				{
 					pt1 = user->joints[XN_SKEL_RIGHT_KNEE-1].position;
 					pt2 = user->joints[XN_SKEL_RIGHT_FOOT-1].position;
+
+					XnVector3D m;
+					getMidPoint(pt1, pt2, &m);
+
+					pt2.X += (m.X - pt1.X) / 3;
+					pt2.Y += (m.Y - pt1.Y) / 3;
+
 					drawTexture(pt1,pt2, w/2);
 					break;
 				}
@@ -283,7 +287,7 @@ void UserController::drawTrackedUser(KinectUser* user)
 				{
 					pt1 = user->joints[XN_SKEL_LEFT_SHOULDER-1].position;
 					pt2 = user->joints[XN_SKEL_LEFT_ELBOW-1].position;
-					drawTexture(pt1,pt2, w/3);
+					drawTexture(pt1,pt2, w/2);
 					break;
 				}
 			case Outfit::OUTFIT_RIGHT_UNDER_ARM:
@@ -304,6 +308,13 @@ void UserController::drawTrackedUser(KinectUser* user)
 				{
 					pt1 = user->joints[XN_SKEL_LEFT_KNEE-1].position;
 					pt2 = user->joints[XN_SKEL_LEFT_FOOT-1].position;
+
+					XnVector3D m;
+					getMidPoint(pt1, pt2, &m);
+
+					pt2.X += (m.X - pt1.X) / 3;
+					pt2.Y += (m.Y - pt1.Y) / 3;
+
 					drawTexture(pt1,pt2, w/2);
 					break;
 				}
@@ -319,7 +330,6 @@ void UserController::drawTrackedUser(KinectUser* user)
 void UserController::drawNewUser(KinectUser* user)
 {
 	static Garment untracked("skins/untracked.png");
-
 	//draw untracked image
 	glColor3f(1,1,1);
 	XnFloat x = user->centerOfMass.X;
@@ -357,11 +367,6 @@ void UserController::drawUser(KinectUser* g_userData)
 		else
 			drawNewUser(g_userData);			
 	}
-}
-
-void UserController::playSound()
-{
-	PlaySound("audio/1.wav", NULL, SND_FILENAME | SND_ASYNC);
 }
 
 void UserController::calibrateUser(KinectUser *user)

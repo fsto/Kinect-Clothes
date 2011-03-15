@@ -1,5 +1,7 @@
 #ifdef _DEBUG
-#include <vld.h>
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 #endif
 
 #include <list>
@@ -99,9 +101,6 @@ void drawBackground()
 		glTexCoord2f(0,0);
 		glVertex2f(0, 0);
 	glEnd();
-
-//	_snprintf(g_rightHand, 64, "Scale: %.2f\n", scale);
-//	_snprintf(g_leftHand, 64, "Offset: %.2fx%.2f\n", imageOffset[0], imageOffset[1]);
 }
 
 void drawUsers()
@@ -219,6 +218,7 @@ void glInit (int *pargc, char **argv)
 
 	glEnable (GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	new KinectUser();
 }
 
 void updateOutfitForUser(KinectUser *user, int type)
@@ -256,4 +256,9 @@ int main(int argc, char **argv)
 	g_kinect.trackerCallback = &updateOutfitForUser;
 
 	glutMainLoop();
+
+
+	#ifdef _DEBUG
+	_CrtDumpMemoryLeaks();
+	#endif
 }
