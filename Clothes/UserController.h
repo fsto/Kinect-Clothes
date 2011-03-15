@@ -28,7 +28,6 @@ class UserController
 	void playSound();
 
 public:
-	bool playingSound;
 	UserController(Kinect* k);
 	void drawUser(KinectUser*);
 	void nextOutfit(KinectUser* user, int type)

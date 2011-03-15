@@ -49,7 +49,6 @@ void UserController::drawJoint(XnSkeletonJointPosition& joint)
 
 void UserController::drawHelmet(KinectUser *user, XnVector3D& pt)
 {
-	glDisable(GL_COLOR_MATERIAL);
 	glColor3f(1,1,1);
 	XnFloat x = pt.X;
 	XnFloat y = pt.Y;
@@ -58,7 +57,6 @@ void UserController::drawHelmet(KinectUser *user, XnVector3D& pt)
 	glTranslatef(x,y,0);
 
 	HelmetList[user->helmet]->bindTexture();
-	glEnable(GL_TEXTURE_2D);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0,1);
 	glVertex2f(-100,-60);
@@ -71,8 +69,6 @@ void UserController::drawHelmet(KinectUser *user, XnVector3D& pt)
 	glEnd();
 
 	glPopMatrix();
-
-	glDisable(GL_TEXTURE_2D);
 }
 
 #define PI 3.1415
@@ -184,14 +180,14 @@ void UserController::drawTrackedUser(KinectUser* user)
 			convertToProjCoordinates(user->joints[i]);
 		}
 
+		glEnable(GL_TEXTURE_2D);
+
 		drawHelmet(user, user->joints[XN_SKEL_HEAD-1].position); //Rita huvud
 
 		Outfit *outfit = OutfitList[user->outfit];
 		XnVector3D pt1, pt2;
 		XnFloat w = 100;//getDistance3D(user->joints[XN_SKEL_RIGHT_SHOULDER-1].position,user->joints[XN_SKEL_LEFT_SHOULDER-1].position);
 
-		glEnable(GL_TEXTURE_2D);
-		//glBegin(GL_QUADS);
 		for(int i=0; i<NUM_GARMENTS;++i)
 		{
 			outfit->getOutfitGarment(i)->bindTexture();
@@ -263,55 +259,40 @@ void UserController::drawTrackedUser(KinectUser* user)
 				}
 			}
 		}
-		//glEnd();
 		glDisable(GL_TEXTURE_2D);
 	}
 }
-
-Garment *untracked;
 
 /*
 * Draw a user that is not tracked. The only available point is CoM.
 */
 void UserController::drawNewUser(KinectUser* user)
 {
-	//draw CoM
-	glPointSize(15.0f);
-	const XnPoint3D *com = &user->centerOfMass;
-   	glColor3f(0.66, 0.33, 0.33);
-	glBegin(GL_POINTS);
-		glVertex3f(com->X, com->Y, 0.1f);
-	glEnd();
+	static Garment untracked("skins/untracked.png");
 
 	//draw untracked image
-	glDisable(GL_COLOR_MATERIAL);
 	glColor3f(1,1,1);
-	if(!untracked)
-	{
-		untracked = new Garment("skins/untracked.png");
-	}
 	XnFloat x = user->centerOfMass.X;
 	XnFloat y = user->centerOfMass.Y;
 	glPushMatrix();
-	glTranslatef(0,-30,0);
+	glTranslatef(0,-50,0);
 
-	untracked->bindTexture();
+	untracked.bindTexture();
+
 	glEnable(GL_TEXTURE_2D);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0,1);
-	glVertex2f(x-80,y-80);
+	glVertex2f(x-80,y-100);
 	glTexCoord2f(0,0);
-	glVertex2f(x-80,y+80);
+	glVertex2f(x-80,y+100);
 	glTexCoord2f(1,0);
-	glVertex2f(x+80,y+80);
+	glVertex2f(x+80,y+100);
 	glTexCoord2f(1,1);
-	glVertex2f(x+80,y-80);
+	glVertex2f(x+80,y-100);
 	glEnd();
 
 	glPopMatrix();
-
 	glDisable(GL_TEXTURE_2D);
-
 }
 
 
@@ -330,7 +311,6 @@ void UserController::drawUser(KinectUser* g_userData)
 
 void UserController::playSound()
 {
-	playingSound = !playingSound;
 	PlaySound("audio/1.wav", NULL, SND_FILENAME | SND_ASYNC);
 }
 

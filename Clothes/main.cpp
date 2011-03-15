@@ -1,4 +1,6 @@
+#ifdef _DEBUG
 #include <vld.h>
+#endif
 
 #include <list>
 #include "GL/glut.h"
