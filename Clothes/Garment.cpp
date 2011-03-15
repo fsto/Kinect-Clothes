@@ -12,6 +12,4 @@ Garment::Garment(char* filepath)
 void Garment::bindTexture()
 {
 	glBindTexture(GL_TEXTURE_2D, id); 
-//	ilutGLSetTex(id);
-	//ilutGLBindTexImage();
 }
