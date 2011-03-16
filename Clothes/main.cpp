@@ -5,6 +5,7 @@
 #endif
 
 #include <list>
+#include <ctime>
 #include "GL/glut.h"
 #include "GL/gl.h"
 #include "skeletonjelly.hpp"
@@ -23,14 +24,12 @@ char g_leftHand[64] = {0};
 char g_rightHand[64] = {0};
 
 XnUInt32XYPair res;
-
 bool drawImage = true, drawBg = true;
-
 UserController *uc;
-
 unsigned char* imageBuffer;
-
 const KinectUser *g_userData = NULL;
+time_t lastUser;
+time_t lastPlayback;
 
 static const char *MESSAGES[] =
 {
@@ -56,6 +55,10 @@ void kinect_status(Kinect *k, Kinect::CallbackType cb_type, XnUserID id, void *d
 	if (cb_type == Kinect::CB_NEW_USER && id == 1)
 	{
 		g_userData = k->getUserData(id);
+		if(difftime(time(NULL), lastUser) > 10)
+		{
+			uc->greet();
+		}
 	}
 }
 
@@ -110,6 +113,7 @@ void drawUsers()
 		KinectUser *user = g_kinect.getUserData(i);
 		if(user)
 		{
+			lastUser = time(NULL);
 			uc->drawUser(user);
 		}
 	}
@@ -170,14 +174,23 @@ void glutDisplay()
 
 void glutIdle()
 {
-	static int time = 0;
+	static int _time = 0;
 
 	int now = glutGet(GLUT_ELAPSED_TIME);
 
-	g_kinect.tick(now - time);
+	g_kinect.tick(now - _time);
 	glutPostRedisplay();
 
-	time = now;
+	_time = now;
+
+	if(difftime(time(NULL), lastUser) > 10)
+	{
+		if(difftime(time(NULL), lastPlayback) > 20)
+		{
+			uc->attractUsers();
+			lastPlayback = time(NULL);
+		}
+	}
 }
 
 void glutKeyboard (unsigned char key, int x, int y)
@@ -201,7 +214,7 @@ void glInit (int *pargc, char **argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInitWindowSize(res.X, res.Y);
 	glutCreateWindow ("Clothes");
-	//glutFullScreen();
+	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
 
 	glutKeyboardFunc(glutKeyboard);
@@ -228,6 +241,13 @@ void updateOutfitForUser(KinectUser *user, int type)
 
 int main(int argc, char **argv)
 {
+	printf("Kinect Clothes launching...\n\n");
+	printf("----------------------------------------------\n");
+	printf("|               Programmed by:               |\n");
+	printf("|  Fredrik Henriques <fredrik@henriques.nu>  |\n");
+	printf("|     Niklas Nordmark <grotto@gmail.com>     |\n");
+	printf("|   Fredrik Stockman <fredrik@stockman.se>   |\n");
+	printf("----------------------------------------------\n\n");
 	g_kinect.setEventCallback(kinect_status, NULL);
 	g_kinect.setRenderFormat(Kinect::RENDER_RGBA);
 	g_kinect.setTicksPerSecond(30);
@@ -254,6 +274,9 @@ int main(int argc, char **argv)
 
 	uc = new UserController(&g_kinect);
 	g_kinect.trackerCallback = &updateOutfitForUser;
+
+	lastUser = time(NULL);
+	lastPlayback = 0;
 
 	glutMainLoop();
 

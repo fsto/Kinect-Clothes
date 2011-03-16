@@ -5,7 +5,8 @@
 
 void SoundPlayer::playSound(unsigned int idx)
 {
-	if(idx < sounds.size())
+	idx--;
+	if(idx < sounds.size() || idx < 0)
 	{
 		if(difftime(time(NULL), nextPlayback) > 0)
 		{
@@ -25,7 +26,7 @@ void SoundPlayer::playSound(unsigned int idx)
 SoundPlayer::SoundPlayer(char *path)
 	: nextPlayback(0)
 {
-	std::fstream file(path);
+	std::ifstream file(path);
 	int count;
 	file >> count;
 	printf("Found %d sounds\n", count);

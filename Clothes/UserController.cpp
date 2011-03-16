@@ -7,7 +7,7 @@ UserController::UserController(Kinect* k)
 : g_kinect(k)
 {
 	player = new SoundPlayer("audio/sounds.txt");
-	std::fstream f("skins/outfits.txt");
+	std::ifstream f("skins/outfits.txt");
 	int countOutfits, countHelmets;
 	f >> countOutfits;
 	f.ignore(1000, '\n');
@@ -25,6 +25,20 @@ UserController::UserController(Kinect* k)
 		sprintf(buffer, "skins/helmets/%d.png", i);
 		HelmetList.push_back(new Garment(buffer));
 	}
+	srand(time(NULL));
+}
+
+void UserController::attractUsers()
+{
+	int sounds[2] = {21,24};
+	int idx = rand()%2;
+
+	player->playSound(sounds[idx]);
+}
+
+void UserController::greet()
+{
+	player->playSound(1);
 }
 
 void UserController::nextOutfit(KinectUser* user, int type)
@@ -40,8 +54,8 @@ void UserController::nextOutfit(KinectUser* user, int type)
 		if(user->joints[XN_SKEL_TORSO -1].fConfidence < DRAW_USER_CONFIDENCE)
 			return;
 
-		int sounds[5] = {2,4,11,12,20};
-		int idx = rand()%5;
+		int sounds[11] = {2,3,4,5,6,7,11,12,17,19,20};
+		int idx = rand()%11;
 
 		player->playSound(sounds[idx]);
 
@@ -56,7 +70,7 @@ void UserController::nextOutfit(KinectUser* user, int type)
 				user->outfit = 0;
 		}
 	};
-	
+
 
 void UserController::convertToProjCoordinates(XnSkeletonJointPosition &joint)
 {

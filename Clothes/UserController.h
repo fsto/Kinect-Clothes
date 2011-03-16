@@ -36,6 +36,8 @@ public:
 	UserController(Kinect* k);
 	void drawUser(KinectUser*);
 	void nextOutfit(KinectUser* user, int type);
+	void attractUsers();
+	void greet();
 };
 
 #endif
