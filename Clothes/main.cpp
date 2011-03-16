@@ -174,15 +174,6 @@ void glutDisplay()
 
 void glutIdle()
 {
-	static int _time = 0;
-
-	int now = glutGet(GLUT_ELAPSED_TIME);
-
-	g_kinect.tick(now - _time);
-	glutPostRedisplay();
-
-	_time = now;
-
 	if(difftime(time(NULL), lastUser) > 10)
 	{
 		if(difftime(time(NULL), lastPlayback) > 20)
@@ -191,6 +182,15 @@ void glutIdle()
 			lastPlayback = time(NULL);
 		}
 	}
+
+	static int _time = 0;
+
+	int now = glutGet(GLUT_ELAPSED_TIME);
+
+	g_kinect.tick(now - _time);
+	glutPostRedisplay();
+
+	_time = now;
 }
 
 void glutKeyboard (unsigned char key, int x, int y)
