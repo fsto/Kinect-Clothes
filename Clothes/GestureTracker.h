@@ -25,6 +25,7 @@ class Tracker
 public:
 	Tracker(KinectUser *_user, void (*_callback)(KinectUser*, int)) : user(_user), callback(_callback), gotRight(0), gotLeft(0){};
 	void Tick();
+	void reset();
 };
 
 #endif

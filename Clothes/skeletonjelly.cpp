@@ -270,7 +270,8 @@ void Kinect::onCalibrationEnd(XnUserID id, XnBool success)
     		_userData[id]->status |= USER_TRACKING;
 
 			_userData[id]->scale = 0;
-			
+			_userData[id]->tracker->reset();
+
     		if (_eventCallback != 0)
     			this->_eventCallback(this, CB_CALIBRATION_SUCCESS, id, _callbackData);
     	}

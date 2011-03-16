@@ -53,3 +53,10 @@ void Tracker::Tick()
 		gotLeft = false;
 
 }
+
+
+void Tracker::reset()
+{
+	startedLeft = time(NULL);
+	startedRight = time(NULL);
+}

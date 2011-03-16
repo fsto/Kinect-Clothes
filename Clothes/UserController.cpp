@@ -37,10 +37,13 @@ void UserController::nextOutfit(KinectUser* user, int type)
 		20
 		*/
 
+		if(user->joints[XN_SKEL_TORSO -1].fConfidence < DRAW_USER_CONFIDENCE)
+			return;
+
 		int sounds[5] = {2,4,11,12,20};
 		int idx = rand()%5;
 
-		player->playSound(idx);
+		player->playSound(sounds[idx]);
 
 		if(type == TRACKER_TYPE_HELMET)
 		{
@@ -204,7 +207,7 @@ void UserController::drawTrackedUser(KinectUser* user)
 	if (user)
 	{
 
-		if(user->joints[XN_SKEL_TORSO-1].fConfidence < .3)
+		if(user->joints[XN_SKEL_TORSO-1].fConfidence < DRAW_USER_CONFIDENCE)
 			return;
 
  		XnSkeletonJointPosition joint;
@@ -415,7 +418,6 @@ void UserController::calibrateUser(KinectUser *user)
 		printf("User scale: %f\n", user->scale);
 	}
 }
-
 
 /*
 void drawTracking()

@@ -11,6 +11,7 @@
 #include "SoundPlayer.h"
 
 #define CONF_LIMIT .95
+#define DRAW_USER_CONFIDENCE .3
 
 class UserController
 {
@@ -29,12 +30,12 @@ class UserController
 	void getMidPoint(XnVector3D&, XnVector3D&, XnVector3D*);
 	void drawTexture(XnVector3D&, XnVector3D&, XnFloat);
 	void drawHelmet(KinectUser*);
+	void calibrateUser(KinectUser *);
 
 public:
 	UserController(Kinect* k);
 	void drawUser(KinectUser*);
 	void nextOutfit(KinectUser* user, int type);
-	void calibrateUser(KinectUser *);
 };
 
 #endif
