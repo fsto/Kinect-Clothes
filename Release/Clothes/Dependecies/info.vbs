@@ -1,0 +1,2 @@
+Set WshShell = CreateObject("WScript.Shell")
+WshShell.Popup "Will now install dependencies. If you for some reason can't install them now, or if they fail to install, they can be reinstalled from the start-menu under 'Kinect Clothes\Reinstall dependencies'.", 0, "Information about dependencies", 0

@@ -1,17 +1,39 @@
-﻿Build started 3/3/2011 5:17:08 PM.
-Project "C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\tanoku-SkeletonJelly-7ef6f70\examples\position\position.vcxproj" on node 2 (build target(s)).
-PrepareForBuild:
-  Creating directory "C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\tanoku-SkeletonJelly-7ef6f70\Release\".
-InitializeBuildStatus:
-  Creating "Release\position.unsuccessfulbuild" because "AlwaysCreate" was specified.
-ClCompile:
-  C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\src\skeletonjelly.cpp main.cpp
-  skeletonjelly.cpp
-c:\documents and settings\administrator.fsto-fe1d070f89\my documents\visual studio 2010\projects\tanoku-skeletonjelly-7ef6f70\src\skeletonjelly.hpp(6): fatal error C1083: Cannot open include file: 'XnOpenNI.h': No such file or directory
-  main.cpp
-c:\documents and settings\administrator.fsto-fe1d070f89\my documents\visual studio 2010\projects\tanoku-skeletonjelly-7ef6f70\examples\position\../../src/skeletonjelly.hpp(6): fatal error C1083: Cannot open include file: 'XnOpenNI.h': No such file or directory
-Done Building Project "C:\Documents and Settings\Administrator.FSTO-FE1D070F89\My Documents\Visual Studio 2010\Projects\tanoku-SkeletonJelly-7ef6f70\examples\position\position.vcxproj" (build target(s)) -- FAILED.
+﻿Build started 3/17/2011 2:42:23 AM.
+     1>Project "C:\Documents\My Documents\Visual Studio 2010\Projects\Kinect-Clothes\Clothes\position.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Release\Kinect-Clothes.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt GestureTracker.cpp Outfit.cpp SoundPlayer.cpp UserController.cpp main.cpp skeletonjelly.cpp
+         GestureTracker.cpp
+         Outfit.cpp
+         SoundPlayer.cpp
+     1>SoundPlayer.cpp(54): warning C4018: '<' : signed/unsigned mismatch
+         UserController.cpp
+         main.cpp
+         skeletonjelly.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Documents\My Documents\Visual Studio 2010\Projects\Kinect-Clothes\Clothes\Release\Kinect-Clothes.exe" /NOLOGO /LIBPATH:Lib openni.lib DevIL.lib ILU.lib ILUT.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\Kinect-Clothes.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Documents\My Documents\Visual Studio 2010\Projects\Kinect-Clothes\Clothes\Release\Kinect-Clothes.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Documents\My Documents\Visual Studio 2010\Projects\Kinect-Clothes\Clothes\Release\Kinect-Clothes.lib" /MACHINE:X86 Release\Garment.obj
+         Release\GestureTracker.obj
+         Release\main.obj
+         Release\Outfit.obj
+         Release\skeletonjelly.obj
+         Release\SoundPlayer.obj
+         Release\UserController.obj
+         Generating code
+         Finished generating code
+         position.vcxproj -> C:\Documents\My Documents\Visual Studio 2010\Projects\Kinect-Clothes\Clothes\Release\Kinect-Clothes.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Documents\My Documents\Visual Studio 2010\Projects\Kinect-Clothes\Clothes\Release\Kinect-Clothes.exe;#1" /manifest "Release\Kinect-Clothes.exe.intermediate.manifest"
+       PostBuildEvent:
+         xcopy /Y "C:\Documents\My Documents\Visual Studio 2010\Projects\Kinect-Clothes\Clothes\Release\Kinect-Clothes.exe" "C:\Documents\My Documents\Clothes"
+         :VCEnd
+         C:\Documents\My Documents\Visual Studio 2010\Projects\Kinect-Clothes\Clothes\Release\Kinect-Clothes.exe
+         1 File(s) copied
+       FinalizeBuildStatus:
+         Deleting file "Release\Kinect-Clothes.unsuccessfulbuild".
+         Touching "Release\Kinect-Clothes.lastbuildstate".
+     1>Done Building Project "C:\Documents\My Documents\Visual Studio 2010\Projects\Kinect-Clothes\Clothes\position.vcxproj" (build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:02.01
+Time Elapsed 00:00:05.59
