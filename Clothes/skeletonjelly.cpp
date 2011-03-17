@@ -202,7 +202,9 @@ XnStatus Kinect::trackUser(XnUserID id /*= DEFAULT_USER*/)
 
 void Kinect::onNewUser(XnUserID id)
 {
+#ifdef _DEBUG
 	printf("Got user %d\n", id);
+#endif
 	if (id < MAX_USERS)
 	{
 		if (_userData[id] == 0)
@@ -222,7 +224,9 @@ void Kinect::onNewUser(XnUserID id)
 
 void Kinect::onLostUser(XnUserID id)
 {
+	#ifdef _DEBUG
 	printf("Lost user %d\n", id);
+	#endif
 	if (userActive(id))
 	{
 		_userData[id]->status = USER_INACTIVE;

@@ -429,7 +429,9 @@ void UserController::calibrateUser(KinectUser *user)
 		user->scale = getDistance(rElbow, rShoulder);
 		user->scale += getDistance(lShoulder, rShoulder);
 		user->scale += getDistance(lElbow, lShoulder);
+		#ifdef _DEBUG
 		printf("User scale: %f\n", user->scale);
+		#endif
 	}
 }
 

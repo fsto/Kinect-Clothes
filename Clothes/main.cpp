@@ -167,7 +167,9 @@ void glutDisplay()
 	glDisable(GL_TEXTURE_2D);
 
 	drawUsers();
+	#ifdef _DEBUG
 	drawHUD();
+	#endif
 
 	glutSwapBuffers();
 }
@@ -200,12 +202,14 @@ void glutKeyboard (unsigned char key, int x, int y)
 	case 27:
 		exit(0);
 		break;
+	#ifdef _DEBUG
 	case ' ':
 		drawImage = !drawImage;
 		break;
 	case 'b':
 		drawBg = !drawBg;
 		break;
+	#endif;
 	}
 }
 void glInit (int *pargc, char **argv)

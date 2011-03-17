@@ -12,7 +12,9 @@ void SoundPlayer::playSound(unsigned int idx)
 		{
 			PlaySound(sounds[idx]->id, NULL, SND_FILENAME | SND_ASYNC);
 			nextPlayback = time(NULL) + sounds[idx]->length;
+#ifdef _DEBUG
 			printf("Playing \"%s\"\n", sounds[idx]->id);
+#endif
 		}
 		else
 		{
