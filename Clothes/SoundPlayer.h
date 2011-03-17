@@ -19,6 +19,7 @@ class SoundPlayer
 	std::vector<SoundObject*> sounds;
 public:
 	SoundPlayer(char *path);
+	~SoundPlayer();
 	void playSound(unsigned int);
 	int count(){return sounds.size();}
 };

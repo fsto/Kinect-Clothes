@@ -1,7 +1,7 @@
 #ifdef _DEBUG
-#define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
+#define _CRTDBG_MAP_ALLOC
 #endif
 
 #include <list>
@@ -200,6 +200,11 @@ void glutKeyboard (unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 27:
+		delete uc;
+		delete[] imageBuffer;
+		#ifdef _DEBUG
+		_CrtDumpMemoryLeaks();
+		#endif
 		exit(0);
 		break;
 	#ifdef _DEBUG
@@ -249,8 +254,8 @@ int main(int argc, char **argv)
 	printf("----------------------------------------------\n");
 	printf("|               Programmed by:               |\n");
 	printf("|  Fredrik Henriques <fredrik@henriques.nu>  |\n");
-	printf("|     Niklas Nordmark <grotto@gmail.com>     |\n");
 	printf("|   Fredrik Stockman <fredrik@stockman.se>   |\n");
+	printf("|     Niklas Nordmark <grottot@gmail.com>    |\n");
 	printf("----------------------------------------------\n\n");
 	g_kinect.setEventCallback(kinect_status, NULL);
 	g_kinect.setRenderFormat(Kinect::RENDER_RGBA);
@@ -270,7 +275,7 @@ int main(int argc, char **argv)
 
 	glInit(&argc, argv);
 
-	int imageSize = g_kinect.getImageTexSize();//getDepthTexSize();
+	int imageSize = g_kinect.getImageTexSize();
 
 	imageBuffer = new unsigned char[imageSize];
 
@@ -283,9 +288,4 @@ int main(int argc, char **argv)
 	lastPlayback = 0;
 
 	glutMainLoop();
-
-
-	#ifdef _DEBUG
-	_CrtDumpMemoryLeaks();
-	#endif
 }

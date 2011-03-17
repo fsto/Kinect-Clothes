@@ -28,6 +28,15 @@ UserController::UserController(Kinect* k)
 	srand(time(NULL));
 }
 
+UserController::~UserController()
+{
+	delete player;
+	for(unsigned int i=0;i<HelmetList.size();++i)
+		delete HelmetList[i];
+	for(unsigned int i=0;i<OutfitList.size();++i)
+		delete OutfitList[i];
+}
+
 void UserController::attractUsers()
 {
 	int sounds[2] = {21,24};
@@ -43,14 +52,6 @@ void UserController::greet()
 
 void UserController::nextOutfit(KinectUser* user, int type)
 	{
-		/*
-		2
-		4
-		11
-		12
-		20
-		*/
-
 		if(user->joints[XN_SKEL_TORSO -1].fConfidence < DRAW_USER_CONFIDENCE)
 			return;
 

@@ -23,4 +23,9 @@ Outfit::Outfit(char* id)
 		garments[i] = new Garment(path);
 	}
 }
-
+Outfit::~Outfit()
+{
+	for(int i = 0; i < NUM_GARMENTS; i++){
+		delete garments[i];
+	}
+}

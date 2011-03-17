@@ -12,17 +12,23 @@ void SoundPlayer::playSound(unsigned int idx)
 		{
 			PlaySound(sounds[idx]->id, NULL, SND_FILENAME | SND_ASYNC);
 			nextPlayback = time(NULL) + sounds[idx]->length;
-#ifdef _DEBUG
+			#ifdef _DEBUG
 			printf("Playing \"%s\"\n", sounds[idx]->id);
-#endif
+			#endif
 		}
 		else
 		{
+			#ifdef _DEBUG
 			printf("Cannot play sound yet, still playing the last one...\n");
+			#endif
 		}
 	}
 	else
+	{
+		#ifdef _DEBUG
 		printf("Sound %d out of range\n", idx);
+		#endif
+	}
 }
 
 SoundPlayer::SoundPlayer(char *path)
@@ -41,5 +47,12 @@ SoundPlayer::SoundPlayer(char *path)
 		o->length = length+1;
 		_snprintf_s(o->id, SOUNDOBJECT_ID_SIZE, "audio/%d.wav", i+1);
 		sounds.push_back(o);
+	}
+}
+SoundPlayer::~SoundPlayer()
+{
+	for(unsigned int i=0; i<sounds.size(); ++i)
+	{
+		delete sounds[i];
 	}
 }
