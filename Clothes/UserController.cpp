@@ -260,8 +260,22 @@ void UserController::drawTrackedUser(KinectUser* user)
 							: Outfit::OUTFIT_LEFT_UNDER_LEG;
 		int secondUnderLeg	= firstUpperLeg == Outfit::OUTFIT_RIGHT_UPPER_LEG
 							? Outfit::OUTFIT_LEFT_UNDER_LEG
-							: Outfit::OUTFIT_RIGHT_UNDER_LEG;
+							: Outfit::OUTFIT_RIGHT_UNDER_LEG;		
+		int firstUpperArm	= user->joints[XN_SKEL_RIGHT_ELBOW-1].position.Z 
+							< user->joints[XN_SKEL_LEFT_ELBOW-1].position.Z
+							? Outfit::OUTFIT_RIGHT_UPPER_ARM
+							: Outfit::OUTFIT_LEFT_UPPER_ARM;
+		int secondUpperArm	= firstUpperArm == Outfit::OUTFIT_RIGHT_UPPER_ARM
+							? Outfit::OUTFIT_LEFT_UPPER_ARM
+							: Outfit::OUTFIT_RIGHT_UPPER_ARM;
+		int firstUnderArm	= firstUpperArm == Outfit::OUTFIT_RIGHT_UPPER_ARM
+							? Outfit::OUTFIT_RIGHT_UNDER_ARM
+							: Outfit::OUTFIT_LEFT_UNDER_ARM;
+		int secondUnderArm	= firstUpperArm == Outfit::OUTFIT_RIGHT_UPPER_ARM
+							? Outfit::OUTFIT_LEFT_UNDER_ARM
+							: Outfit::OUTFIT_RIGHT_UNDER_ARM;
 		int garmentOrder[NUM_GARMENTS];
+		
 
 		for(int i = 0; i < NUM_GARMENTS; i++){
 			if (	i == Outfit::OUTFIT_LEFT_UPPER_LEG
@@ -273,6 +287,14 @@ void UserController::drawTrackedUser(KinectUser* user)
 				garmentOrder[++i] = secondUpperLeg;
 				garmentOrder[++i] = secondUnderLeg;
 			}
+			else if(	i == Outfit::OUTFIT_LEFT_UPPER_ARM
+					||	i == Outfit::OUTFIT_RIGHT_UPPER_ARM
+					||	i == Outfit::OUTFIT_LEFT_UNDER_ARM
+					||	i == Outfit::OUTFIT_RIGHT_UNDER_ARM){
+					garmentOrder[i] = firstUpperArm;
+					garmentOrder[++i] = firstUnderArm;
+					garmentOrder[++i] = secondUpperArm;
+					garmentOrder[++i] = secondUnderArm;
 			else{
 				garmentOrder[i] = i;
 			}
