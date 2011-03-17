@@ -38,10 +38,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(OPEN_NI_INCLUDE);$(IncludePath);Include</IncludePath>
+    <IncludePath>$(OPEN_NI_INCLUDE);$(IncludePath);Include;C:\Program Files %28x86%29\Visual Leak Detector\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>$(OPEN_NI_LIB);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(OPEN_NI_LIB);C:\Program Files %28x86%29\Visual Leak Detector\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(OPEN_NI_INCLUDE);$(IncludePath);Include</IncludePath>
@@ -56,6 +56,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>openni.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>Lib;%(AdditionalLibraryDirectories);</AdditionalLibraryDirectories>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -72,6 +73,9 @@
       <AdditionalLibraryDirectories>Lib;%(AdditionalLibraryDirectories);</AdditionalLibraryDirectories>
       <AdditionalDependencies>openni.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y "C:\Documents\My Documents\Visual Studio 2010\Projects\Kinect-Clothes\Clothes\Release\Kinect-Clothes.exe" "C:\Documents\My Documents\Clothes"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Garment.cpp" />
@@ -79,6 +83,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Outfit.cpp" />
     <ClCompile Include="skeletonjelly.cpp" />
+    <ClCompile Include="SoundPlayer.cpp" />
     <ClCompile Include="UserController.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +92,7 @@
     <ClInclude Include="KinectUser.h" />
     <ClInclude Include="Outfit.h" />
     <ClInclude Include="skeletonjelly.hpp" />
+    <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="UserController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
