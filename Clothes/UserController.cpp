@@ -142,6 +142,7 @@ void UserController::getMidPoint(XnVector3D& a, XnVector3D& b, XnVector3D* mid)
 {
 	mid->X = (a.X+b.X)/2;
 	mid->Y = (a.Y+b.Y)/2;
+	mid->Z = (a.Z+b.Z)/2;
 }
 void UserController::drawTexture(XnVector3D& pt1, XnVector3D& pt2, XnFloat w)
 {
@@ -261,6 +262,17 @@ void UserController::drawTrackedUser(KinectUser* user)
 		int secondUnderLeg	= firstUpperLeg == Outfit::OUTFIT_RIGHT_UPPER_LEG
 							? Outfit::OUTFIT_LEFT_UNDER_LEG
 							: Outfit::OUTFIT_RIGHT_UNDER_LEG;
+		XnVector3D leftArmMid, rightArmMid;
+		getMidPoint(user->joints[XN_SKEL_RIGHT_ELBOW-1].position, user->joints[XN_SKEL_RIGHT_HAND-1].position, &rightArmMid);
+		getMidPoint(user->joints[XN_SKEL_LEFT_ELBOW-1].position, user->joints[XN_SKEL_LEFT_HAND-1].position, &leftArmMid);
+
+		int firstUnderArm	= rightArmMid.Z 
+							< leftArmMid.Z
+							? Outfit::OUTFIT_RIGHT_UNDER_ARM
+							: Outfit::OUTFIT_LEFT_UNDER_ARM;
+		int secondUnderArm	= firstUnderArm == Outfit::OUTFIT_RIGHT_UNDER_ARM
+							? Outfit::OUTFIT_LEFT_UNDER_ARM
+							: Outfit::OUTFIT_RIGHT_UNDER_ARM;
 		int garmentOrder[NUM_GARMENTS];
 
 		for(int i = 0; i < NUM_GARMENTS; i++){
@@ -272,6 +284,13 @@ void UserController::drawTrackedUser(KinectUser* user)
 				garmentOrder[++i] = firstUnderLeg;
 				garmentOrder[++i] = secondUpperLeg;
 				garmentOrder[++i] = secondUnderLeg;
+			}
+			else if (i == Outfit::OUTFIT_LEFT_UNDER_ARM
+				||	i == Outfit::OUTFIT_RIGHT_UNDER_ARM)
+			{
+				garmentOrder[i] = firstUnderArm;
+				garmentOrder[++i] = secondUnderArm;
+				
 			}
 			else{
 				garmentOrder[i] = i;
