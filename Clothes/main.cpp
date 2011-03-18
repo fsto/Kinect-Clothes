@@ -259,6 +259,27 @@ int main(int argc, char **argv)
 	printf("|   Fredrik Stockman <fredrik@stockman.se>   |\n");
 	printf("|     Niklas Nordmark <grottot@gmail.com>    |\n");
 	printf("----------------------------------------------\n\n");
+	
+	printf("General application description:\n");
+	printf("Kinect Clothes is developed to be a fair station at the swedish fair\n");
+	printf("company Riksutställningar's touring fair. The station lets any visitor\n");
+	printf("try out futuristic clothes by standing in front of a kinect and screen.\n\n");
+	
+	printf("Copyright (C) 2011	Fredrik Henriques, Fredrik Stockman & Niklas Nordmark\n");
+	printf("\n");	   
+	printf("This program is free software: you can redistribute it and/or modify\n");
+	printf("it under the terms of the GNU General Public License as published by\n");
+	printf("the Free Software Foundation, either version 3 of the License, or\n");
+	printf("(at your option) any later version.\n");
+	printf("\n");
+	printf("This program is distributed in the hope that it will be useful,\n");
+	printf("but WITHOUT ANY WARRANTY; without even the implied warranty of\n");
+	printf("MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n");
+	printf("GNU General Public License for more details.\n");
+	printf("\n");
+	printf("You should have received a copy of the GNU General Public License\n");
+	printf("along with this program.  If not, see <http://www.gnu.org/licenses/>.\n");
+		   
 	g_kinect.setEventCallback(kinect_status, NULL);
 	g_kinect.setRenderFormat(Kinect::RENDER_RGBA);
 	g_kinect.setTicksPerSecond(30);
