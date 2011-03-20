@@ -278,7 +278,14 @@ int main(int argc, char **argv)
 	printf("GNU General Public License for more details.\n");
 	printf("\n");
 	printf("You should have received a copy of the GNU General Public License\n");
-	printf("along with this program.  If not, see <http://www.gnu.org/licenses/>.\n");
+	printf("along with this program.  If not, see <http://www.gnu.org/licenses/>.\n\n");
+
+	printf("----------------------------------------------\n");
+	printf("|               Programmed by:               |\n");
+	printf("|  Fredrik Henriques <fredrik@henriques.nu>  |\n");
+	printf("|   Fredrik Stockman <fredrik@stockman.se>   |\n");
+	printf("|     Niklas Nordmark <grottot@gmail.com>    |\n");
+	printf("----------------------------------------------\n\n");
 		   
 	g_kinect.setEventCallback(kinect_status, NULL);
 	g_kinect.setRenderFormat(Kinect::RENDER_RGBA);
