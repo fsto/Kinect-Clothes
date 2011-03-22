@@ -298,7 +298,7 @@ int main(int argc, char **argv)
 		char input = ' ';
 		scanf_s("%c", &input);
 		if(input != 'y')
-			return(1);
+			return(0);
 	}
 
 	res = g_kinect.getDepthResolution();
