@@ -12,9 +12,6 @@
 #include "KinectUser.h"
 #include "UserController.h"
 
-#define WINDOW_X 800
-#define WINDOW_Y 600
-
 bool g_running = false;
 Kinect g_kinect;
 
@@ -124,7 +121,7 @@ void drawHUD()
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	glLoadIdentity();
-	glOrtho(0, WINDOW_X, 0, WINDOW_Y, -1.0, 1.0);
+	glOrtho(0, res.X, 0, res.Y, -1.0, 1.0);
 	glDisable(GL_DEPTH_TEST); 
 
 	glColor3f(1, 1, 1);
@@ -160,7 +157,11 @@ void glutDisplay()
 	glDisable(GL_DEPTH_TEST); 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glOrtho(0, res.X, res.Y, 0, -1.0, 1.0);
+	if(glutGet(GLUT_SCREEN_WIDTH) < glutGet(GLUT_SCREEN_HEIGHT))
+		glOrtho((res.X / 2) - (res.Y * glutGet(GLUT_SCREEN_WIDTH)) / (glutGet(GLUT_SCREEN_HEIGHT) * 2), (res.X / 2) + (res.Y * glutGet(GLUT_SCREEN_WIDTH)) / (glutGet(GLUT_SCREEN_HEIGHT) * 2), res.Y, 0, -1.0, 1.0);
+	else
+		glOrtho(0, res.X, res.Y, 0, -1.0, 1.0);
+
 	if(drawBg)
 		drawBackground();
 
@@ -242,7 +243,6 @@ void glInit (int *pargc, char **argv)
 
 	glEnable (GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	new KinectUser();
 }
 
 void updateOutfitForUser(KinectUser *user, int type)
