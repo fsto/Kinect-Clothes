@@ -253,12 +253,12 @@ void updateOutfitForUser(KinectUser *user, int type)
 int main(int argc, char **argv)
 {
 	printf("Kinect Clothes launching...\n\n");
-	printf("----------------------------------------------\n");
-	printf("|               Programmed by:               |\n");
-	printf("|  Fredrik Henriques <fredrik@henriques.nu>  |\n");
-	printf("|   Fredrik Stockman <fredrik@stockman.se>   |\n");
-	printf("|     Niklas Nordmark <grottot@gmail.com>    |\n");
-	printf("----------------------------------------------\n\n");
+	printf("-----------------------------------------------------\n");
+	printf("|                  Programmed by:                   |\n");
+	printf("|     Fredrik Henriques <fredrik@henriques.nu>      |\n");
+	printf("|   Fredrik Stockman <fredrik@fredrikstockman.se>   |\n");
+	printf("|        Niklas Nordmark <grottot@gmail.com>        |\n");
+	printf("-----------------------------------------------------\n\n");
 	
 	printf("General application description:\n");
 	printf("Kinect Clothes is developed to be a fair station at the swedish fair\n");
@@ -280,12 +280,12 @@ int main(int argc, char **argv)
 	printf("You should have received a copy of the GNU General Public License\n");
 	printf("along with this program.  If not, see <http://www.gnu.org/licenses/>.\n\n");
 
-	printf("----------------------------------------------\n");
-	printf("|               Programmed by:               |\n");
-	printf("|  Fredrik Henriques <fredrik@henriques.nu>  |\n");
-	printf("|   Fredrik Stockman <fredrik@stockman.se>   |\n");
-	printf("|     Niklas Nordmark <grottot@gmail.com>    |\n");
-	printf("----------------------------------------------\n\n");
+	printf("-----------------------------------------------------\n");
+	printf("|                  Programmed by:                   |\n");
+	printf("|     Fredrik Henriques <fredrik@henriques.nu>      |\n");
+	printf("|   Fredrik Stockman <fredrik@fredrikstockman.se>   |\n");
+	printf("|        Niklas Nordmark <grottot@gmail.com>        |\n");
+	printf("-----------------------------------------------------\n\n");
 		   
 	g_kinect.setEventCallback(kinect_status, NULL);
 	g_kinect.setRenderFormat(Kinect::RENDER_RGBA);
