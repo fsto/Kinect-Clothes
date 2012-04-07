@@ -1,3 +1,3 @@
-Clothes
+** Kinect Clothes
 
-Kinect applikation som  visar virtuella kläder på användaren. Se https://github.com/fsto/Kinect-Clothes/wiki
+Kinect application for Windows which lets the user try out clothes.
